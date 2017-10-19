@@ -5,6 +5,8 @@
  */
 package Interfaces;
 
+import Logica.fInicio;
+
 /**
  *
  * @author Alexis Mandracchia
@@ -87,6 +89,11 @@ public class menuInicio extends javax.swing.JFrame {
         Ingresar.setForeground(new java.awt.Color(0, 0, 255));
         Ingresar.setText("INGRESAR");
         Ingresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Ingresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IngresarActionPerformed(evt);
+            }
+        });
         getContentPane().add(Ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, 110, 30));
 
         logoUTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoUTN_200px.png"))); // NOI18N
@@ -106,6 +113,11 @@ public class menuInicio extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
+        // TODO add your handling code here:
+        fInicio func = new fInicio();
+    }//GEN-LAST:event_IngresarActionPerformed
 
     /**
      * @param args the command line arguments
