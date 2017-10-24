@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+ 
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.username">bd91e7489764bf</property>
+        <property name="hibernate.connection.password">37e445a2</property>
+        <property name="hibernate.connection.url">jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_fecacb5447852a5</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">false</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <!--<mapping resource="com/websystique/hibernate/model/Student.hbm.xml"/>-->
+        <mapping class="Datos.admin"/>
+        <mapping class="Datos.aula"/>
+        <mapping class="Datos.bedel"/>
+        <mapping class="Datos.catedra"/>
+        <mapping class="Datos.clase"/>
+        <mapping class="Datos.curso"/>
+        <mapping class="Datos.docente"/>
+        <mapping class="Datos.en"/>
+        <mapping class="Datos.informatica"/>
+        <mapping class="Datos.multimedios"/>
+        <mapping class="Datos.password"/>
+        <mapping class="Datos.periodo"/>
+        <mapping class="Datos.reserva"/>
+        <mapping class="Datos.seminario"/>
+        <mapping class="Datos.sinRecursos"/>
+        <mapping class="Datos.usuario"/>
+    </session-factory>
+</hibernate-configuration>
