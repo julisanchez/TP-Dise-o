@@ -35,6 +35,7 @@ public class usuarioDAO {
         try {
             String id = query.getSingleResult().toString();
         } catch (NoResultException nre) {
+            session.close();
             return true;
         }
  
