@@ -5,11 +5,16 @@
  */
 package Interfaces;
 
+import DTO.bedelDTO;
+import Logica.gestorUsuario;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author Alexis Mandracchia
  */
-public class registrarBedel extends javax.swing.JFrame {
+public class registrarBedel extends javax.swing.JFrame{
 
     /**
      * Creates new form menuBedel
@@ -17,6 +22,66 @@ public class registrarBedel extends javax.swing.JFrame {
     public registrarBedel() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.vacioApellido.setVisible(false);
+        this.vacioNombres.setVisible(false);
+        this.vacioUsuario.setVisible(false);
+        this.vacioPass.setVisible(false);
+        this.vacioConfPass.setVisible(false);
+    }
+ 
+    
+    public boolean validaDatos(String sApellido, String sNombres, String sUsuario, String sPass, String sConfPass, String sTurno){
+        boolean vacio=false;
+        if(sNombres.equals("")){
+            this.vacioNombres.setVisible(true);
+            vacio=true;
+        }
+        else{
+            this.vacioNombres.setVisible(false);
+        }
+        if(sApellido.equals("")){
+            this.vacioApellido.setVisible(true);
+            vacio=true;
+        }
+        else{
+            this.vacioApellido.setVisible(false);
+        }
+        if(sUsuario.equals("")){
+            this.vacioUsuario.setVisible(true);
+            vacio=true;
+        }else{
+            this.vacioUsuario.setVisible(false);
+        }
+        if(sPass.equals("")){
+            this.vacioPass.setVisible(true);
+            vacio=true;
+        }else{
+            this.vacioPass.setVisible(false);
+        }
+        if(sConfPass.equals("")){
+            this.vacioConfPass.setVisible(true);
+            vacio=true;
+        }else{
+            this.vacioConfPass.setVisible(false);
+        }
+        if(sTurno.equals("")){
+            vacio=true;
+        }
+        
+        if(vacio){
+             JOptionPane.showMessageDialog(null,"Apa... dejaste campos vacios.","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+        }
+        if(!sPass.equals(sConfPass)){
+            vacio=true;
+            this.vacioPass.setVisible(true);
+            this.vacioConfPass.setVisible(true);
+            JOptionPane.showMessageDialog(null,"Los campos de contraseña no coinciden","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            this.vacioConfPass.setVisible(false);
+            this.vacioPass.setVisible(false);
+        }
+        
+        return vacio;
     }
 
     /**
@@ -45,6 +110,11 @@ public class registrarBedel extends javax.swing.JFrame {
         aceptarButton = new javax.swing.JButton();
         cancelarButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        vacioApellido = new javax.swing.JLabel();
+        vacioNombres = new javax.swing.JLabel();
+        vacioUsuario = new javax.swing.JLabel();
+        vacioPass = new javax.swing.JLabel();
+        vacioConfPass = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,16 +158,44 @@ public class registrarBedel extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Nombre de usuario:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, 20));
+
+        apellidoText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                apellidoTextActionPerformed(evt);
+            }
+        });
+        apellidoText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apellidoTextKeyTyped(evt);
+            }
+        });
         getContentPane().add(apellidoText, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 270, -1));
+
+        nombresText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombresTextKeyTyped(evt);
+            }
+        });
         getContentPane().add(nombresText, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 270, -1));
 
         turnoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mañana", "Tarde", "Tarde-Noche", "Noche" }));
         getContentPane().add(turnoCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 140, -1));
+
+        usuarioText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                usuarioTextKeyTyped(evt);
+            }
+        });
         getContentPane().add(usuarioText, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 200, -1));
 
         pwText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pwTextActionPerformed(evt);
+            }
+        });
+        pwText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pwTextKeyTyped(evt);
             }
         });
         getContentPane().add(pwText, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 200, -1));
@@ -107,20 +205,39 @@ public class registrarBedel extends javax.swing.JFrame {
                 pwConfirTextActionPerformed(evt);
             }
         });
+        pwConfirText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pwConfirTextKeyTyped(evt);
+            }
+        });
         getContentPane().add(pwConfirText, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 200, -1));
 
         aceptarButton.setBackground(new java.awt.Color(0, 204, 0));
         aceptarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         aceptarButton.setForeground(new java.awt.Color(255, 255, 255));
         aceptarButton.setText("Aceptar");
+        aceptarButton.setBorderPainted(false);
         aceptarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        aceptarButton.setOpaque(true);
+        aceptarButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aceptarButtonMouseClicked(evt);
+            }
+        });
+        aceptarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(aceptarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 90, 30));
 
         cancelarButton.setBackground(new java.awt.Color(255, 0, 0));
         cancelarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         cancelarButton.setForeground(new java.awt.Color(255, 255, 255));
         cancelarButton.setText("Cancelar");
+        cancelarButton.setBorderPainted(false);
         cancelarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelarButton.setOpaque(true);
         cancelarButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cancelarButtonMouseClicked(evt);
@@ -131,12 +248,37 @@ public class registrarBedel extends javax.swing.JFrame {
                 cancelarButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, 90, 30));
+        getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, -1, 30));
 
         jLabel9.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Contraseña:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 90, 20));
+
+        vacioApellido.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        vacioApellido.setForeground(new java.awt.Color(255, 0, 0));
+        vacioApellido.setText("(*)");
+        getContentPane().add(vacioApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, 30));
+
+        vacioNombres.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        vacioNombres.setForeground(new java.awt.Color(255, 0, 0));
+        vacioNombres.setText("(*)");
+        getContentPane().add(vacioNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, -1, 30));
+
+        vacioUsuario.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        vacioUsuario.setForeground(new java.awt.Color(255, 0, 0));
+        vacioUsuario.setText("(*)");
+        getContentPane().add(vacioUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, -1, 30));
+
+        vacioPass.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        vacioPass.setForeground(new java.awt.Color(255, 0, 0));
+        vacioPass.setText("(*)");
+        getContentPane().add(vacioPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, -1, 30));
+
+        vacioConfPass.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        vacioConfPass.setForeground(new java.awt.Color(255, 0, 0));
+        vacioConfPass.setText("(*)");
+        getContentPane().add(vacioConfPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, 30));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/simple-blue-ii.jpg"))); // NOI18N
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500));
@@ -161,6 +303,86 @@ public class registrarBedel extends javax.swing.JFrame {
         obj.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_cancelarButtonMouseClicked
+
+    
+    private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
+        String sApellido;
+        String sNombre;
+        String sUsuario;
+        String sPass;
+        String sConfPass;
+        String sTurno;
+        
+        sApellido = this.apellidoText.getText();
+        sNombre = this.nombresText.getText();
+        sUsuario = this.usuarioText.getText();
+        sPass = new String(this.pwText.getPassword());
+        sConfPass = new String(this.pwConfirText.getPassword());
+        sTurno = (String) this.turnoCombo.getSelectedItem();
+        
+        
+        
+        if(!(this.validaDatos(sApellido, sNombre, sUsuario, sPass, sConfPass, sTurno))){
+            //JOptionPane.showMessageDialog(null,"Todo es correcto","Todo OK",JOptionPane.INFORMATION_MESSAGE);
+            bedelDTO Bedel = new bedelDTO();
+            //bedel.setId();
+            Bedel.setApellido(sApellido);
+            Bedel.setNombre(sNombre);
+            Bedel.setUsername(sUsuario);
+            Bedel.setPass(sPass);
+            Bedel.setTurno(sTurno);         
+            
+            gestorUsuario gestor = new gestorUsuario();
+            gestor.registrar(   Bedel);
+            
+            
+            
+        }        
+    }//GEN-LAST:event_aceptarButtonActionPerformed
+
+    private void aceptarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarButtonMouseClicked
+       
+       
+    }//GEN-LAST:event_aceptarButtonMouseClicked
+
+    private void apellidoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidoTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_apellidoTextActionPerformed
+
+    private void apellidoTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidoTextKeyTyped
+        int num_car=20;
+        if (apellidoText.getText().length()>=num_car){
+            evt.consume();
+        }
+    }//GEN-LAST:event_apellidoTextKeyTyped
+
+    private void nombresTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombresTextKeyTyped
+        int num_car=20;
+        if (nombresText.getText().length()>=num_car){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nombresTextKeyTyped
+
+    private void usuarioTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usuarioTextKeyTyped
+        int num_car=20;
+        if (usuarioText.getText().length()>=num_car){
+            evt.consume();
+        }
+    }//GEN-LAST:event_usuarioTextKeyTyped
+
+    private void pwTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwTextKeyTyped
+        int num_car=20;
+        if (pwText.getText().length()>=num_car){
+            evt.consume();
+        }
+    }//GEN-LAST:event_pwTextKeyTyped
+
+    private void pwConfirTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwConfirTextKeyTyped
+        int num_car=20;
+        if (pwConfirText.getText().length()>=num_car){
+            evt.consume();
+        }
+    }//GEN-LAST:event_pwConfirTextKeyTyped
 
     /**
      * @param args the command line arguments
@@ -199,6 +421,7 @@ public class registrarBedel extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptarButton;
@@ -219,5 +442,10 @@ public class registrarBedel extends javax.swing.JFrame {
     private javax.swing.JPasswordField pwText;
     private javax.swing.JComboBox<String> turnoCombo;
     private javax.swing.JTextField usuarioText;
+    private javax.swing.JLabel vacioApellido;
+    private javax.swing.JLabel vacioConfPass;
+    private javax.swing.JLabel vacioNombres;
+    private javax.swing.JLabel vacioPass;
+    private javax.swing.JLabel vacioUsuario;
     // End of variables declaration//GEN-END:variables
 }

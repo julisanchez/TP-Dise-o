@@ -15,7 +15,6 @@ import org.hibernate.annotations.Type;
  * @author julisanchez
  */
 @Entity
-@Table
 public class multimedios extends aula implements Serializable {
     @Type(type="yes_no")
     private Boolean televisor;

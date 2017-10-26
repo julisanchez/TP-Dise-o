@@ -54,13 +54,16 @@ public class menuAdmin extends javax.swing.JFrame {
         cerrarSesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         cerrarSesion.setText("Cerrar Sesión");
+        cerrarSesion.setBorderPainted(false);
         cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cerrarSesion.setOpaque(true);
         getContentPane().add(cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 110, 30));
 
         irReserva.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         irReserva.setText("REGISTRAR BEDEL");
         irReserva.setBorder(null);
         irReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        irReserva.setOpaque(true);
         irReserva.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 irReservaMouseClicked(evt);
@@ -77,6 +80,7 @@ public class menuAdmin extends javax.swing.JFrame {
         irBuscarAula.setText("MODIFICAR/ELIMINAR BEDEL");
         irBuscarAula.setBorder(null);
         irBuscarAula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        irBuscarAula.setOpaque(true);
         getContentPane().add(irBuscarAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 220, 50));
 
         logoUTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoUTN_200px.png"))); // NOI18N

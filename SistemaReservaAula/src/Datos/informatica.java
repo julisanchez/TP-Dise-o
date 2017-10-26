@@ -15,7 +15,6 @@ import org.hibernate.annotations.Type;
  * @author julisanchez
  */
 @Entity
-@Table
 public class informatica extends aula implements Serializable {
     private int cantidadPc;
     @Type(type="yes_no")

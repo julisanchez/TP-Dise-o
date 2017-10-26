@@ -22,7 +22,8 @@ public class SistemaReservaAula {
      */
     
     public static void main(String[] args) {
-        conexion conex = new conexion();
+        
+        conexion conex = conexion.getInstance();
         
         try {
             conex.setUp();
@@ -30,7 +31,8 @@ public class SistemaReservaAula {
             Logger.getLogger(SistemaReservaAula.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        registrarBedel pantalla = new registrarBedel();
+        new registrarBedel().setVisible(true);
+        
     }
     
 }

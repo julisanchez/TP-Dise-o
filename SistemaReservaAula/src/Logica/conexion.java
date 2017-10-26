@@ -18,7 +18,15 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  */
 public class conexion {
     
+    private static conexion connection = new conexion();
+    
+    private conexion(){}
+    
     SessionFactory sessionFactory;
+    
+    public static conexion getInstance( ) {
+      return connection;
+   }
     
     public void setUp() throws Exception {
 	// A SessionFactory is set up once for an application!

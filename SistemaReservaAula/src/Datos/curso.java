@@ -14,7 +14,6 @@ import javax.persistence.Table;
  * @author julisanchez
  */
 @Entity
-@Table
 public class curso extends clase implements Serializable {
     private String profesores;
     private int clase;

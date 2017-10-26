@@ -56,31 +56,37 @@ public class menuBedel extends javax.swing.JFrame {
         cerrarSesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         cerrarSesion.setText("Cerrar Sesión");
+        cerrarSesion.setBorderPainted(false);
         cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cerrarSesion.setOpaque(true);
         getContentPane().add(cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 110, 30));
 
         irReserva.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         irReserva.setText("NUEVA RESERVA");
         irReserva.setBorder(null);
         irReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        irReserva.setOpaque(true);
         getContentPane().add(irReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 170, 50));
 
         irBuscarAula.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         irBuscarAula.setText("BUSCAR AULA");
         irBuscarAula.setBorder(null);
         irBuscarAula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        irBuscarAula.setOpaque(true);
         getContentPane().add(irBuscarAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 170, 50));
 
         irReservasDia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         irReservasDia.setText("RESERVAS POR DIA");
         irReservasDia.setBorder(null);
         irReservasDia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        irReservasDia.setOpaque(true);
         getContentPane().add(irReservasDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 170, 50));
 
         irReservasCurso.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         irReservasCurso.setText("RESERVAS POR CURSO");
         irReservasCurso.setBorder(null);
         irReservasCurso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        irReservasCurso.setOpaque(true);
         getContentPane().add(irReservasCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 170, 50));
 
         logoUTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoUTN_200px.png"))); // NOI18N

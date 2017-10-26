@@ -14,7 +14,6 @@ import javax.persistence.Table;
  * @author julisanchez
  */
 @Entity
-@Table
 public class catedra extends clase implements Serializable {
     private String carrera;
     private int nivel;
