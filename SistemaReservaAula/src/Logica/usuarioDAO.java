@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -27,20 +28,23 @@ public class usuarioDAO {
     public boolean validarU(String username){
         
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
-        Session session = sessionFactory.openSession();
-        
-        Query query = session.createQuery("SELECT idUsuario FROM usuario where username=:username");
-        query.setParameter( "username", username);
-        
         try {
+            Session session = sessionFactory.openSession();
+            Query query = session.createQuery("SELECT idUsuario FROM usuario where username=:username");
+            query.setParameter( "username", username);
+            try {
             String id = query.getSingleResult().toString();
-        } catch (NoResultException nre) {
+            } catch (NoResultException nre) {
+                session.close();
+                return true;
+            }
             session.close();
-            return true;
+            return false; 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Se ha perdido la conexión. Reconectando...","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
         }
- 
-        session.close();
-        return false; 
+        return false;
+        
     }
     
     public boolean crearBedel(bedelDTO registrarBedelDTO){

@@ -5,8 +5,13 @@
  */
 package Interfaces;
 
+import Datos.usuario;
+import Logica.conexion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
@@ -118,7 +123,9 @@ public class menuInicio extends javax.swing.JFrame {
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
         // TODO add your handling code here:
-
+        
+        new menuAdmin().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_IngresarActionPerformed
 
     /**

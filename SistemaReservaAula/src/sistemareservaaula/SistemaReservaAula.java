@@ -5,7 +5,7 @@
  */
 package sistemareservaaula;
 
-import Interfaces.registrarBedel;
+import Interfaces.menuInicio;
 import Logica.conexion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +31,7 @@ public class SistemaReservaAula {
             Logger.getLogger(SistemaReservaAula.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        new registrarBedel().setVisible(true);
+        new menuInicio().setVisible(true);
         
     }
     

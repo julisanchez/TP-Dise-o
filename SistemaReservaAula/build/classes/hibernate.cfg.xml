@@ -8,12 +8,12 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.username">bd91e7489764bf</property>
         <property name="hibernate.connection.password">37e445a2</property>
-        <property name="hibernate.connection.url">jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_fecacb5447852a5</property>
+        <property name="hibernate.connection.url">jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_fecacb5447852a5?reconnect=true</property>
         <property name="show_sql">true</property>
         <property name="format_sql">false</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
        
-        <!--<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>-->
+        <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
         <property name="hibernate.c3p0.acquire_increment">1</property>
         <property name="hibernate.c3p0.idle_test_period">300</property>
         <property name="hibernate.c3p0.timeout">10000</property>

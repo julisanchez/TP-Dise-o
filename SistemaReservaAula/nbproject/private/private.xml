@@ -6,13 +6,11 @@
             <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/DTO/bedelDTO.java</file>
             <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/sistemareservaaula/SistemaReservaAula.java</file>
             <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Interfaces/registrarBedel.java</file>
-            <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Interfaces/menuBedel.java</file>
             <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/hibernate.cfg.xml</file>
-            <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Logica/gestorUsuario.java</file>
             <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Datos/usuario.java</file>
+            <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Logica/gestorUsuario.java</file>
             <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Logica/usuarioDAO.java</file>
             <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Datos/password.java</file>
-            <file>file:/Users/julisanchez/Desktop/TP%20Diseño/TP-Dise-o/SistemaReservaAula/src/Interfaces/menuAdmin.java</file>
         </group>
     </open-files>
 </project-private>

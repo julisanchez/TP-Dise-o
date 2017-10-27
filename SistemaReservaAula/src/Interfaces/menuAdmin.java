@@ -94,6 +94,8 @@ public class menuAdmin extends javax.swing.JFrame {
 
     private void irReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irReservaActionPerformed
         // TODO add your handling code here:
+        new registrarBedel().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_irReservaActionPerformed
 
     private void irReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_irReservaMouseClicked
