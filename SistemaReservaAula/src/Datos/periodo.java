@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +34,7 @@ public class periodo implements Serializable {
     private Date fin;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idPeriodo")
-    @IndexColumn(name="idx")
+    @OrderColumn
     private List<en> ens;
 
     public periodo() {

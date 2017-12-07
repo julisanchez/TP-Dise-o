@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -25,66 +25,96 @@ import org.hibernate.SessionFactory;
 public class usuarioDAO {
     
     //Valida si el usuario existe en la base de datos. Si es asi retorna true
-    public boolean validarU(String username){
+    public static boolean validarU(String username){
         
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        Query query = session.createQuery("SELECT idUsuario FROM usuario where username=:username");
+        query.setParameter( "username", username);
+        
         try {
-            Session session = sessionFactory.openSession();
-            Query query = session.createQuery("SELECT idUsuario FROM usuario where username=:username");
-            query.setParameter( "username", username);
-            try {
             String id = query.getSingleResult().toString();
-            } catch (NoResultException nre) {
-                session.close();
-                return true;
-            }
+        } catch (NoResultException nre) {
             session.close();
-            return false; 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Se ha perdido la conexión. Reconectando...","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            return true;
         }
-        return false;
-        
+ 
+        session.close();
+        return false; 
     }
     
-    public boolean crearBedel(bedelDTO registrarBedelDTO){
-        
-        bedel Bedel = new bedel();
-        
-        Bedel.setApellido(registrarBedelDTO.getApellido());
-        Bedel.setNombre(registrarBedelDTO.getNombre());
-        Bedel.setTurno(registrarBedelDTO.getTurno());
-        Bedel.setActivo(true);
-        Bedel.setUsername(registrarBedelDTO.getUsername());
-        
-        password Password = new password();
-        
-        Password.setCodigo(registrarBedelDTO.getPass());
-        Password.setFechaCreacion(LocalDateTime.now());
-        
-        List<password> Passwords = new ArrayList<>();
-        Passwords.add(Password);
-        
-        Bedel.setPasswords(Passwords);
-         
-        return guardar(Bedel,Password);
-        
-    }
     
-    private boolean guardar(bedel Bedel, password Password){
+    
+    public static boolean guardar(bedel Bedel){
         try {
             SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(Bedel);
-            session.save(Password);
+            session.saveOrUpdate(Bedel);
+           // session.save(Password);
             session.getTransaction().commit();
             session.close();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
+            System.out.println(e);
             return false;
         }
        return true; 
     }
 
+    public static List<bedelDTO> buscarBedeles(String sApellido, String sTurno){
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query;
+        String where="WHERE DTYPE='bedel'";
+        
+        if(!sApellido.isEmpty()){
+            where += " AND apellido=:apellido";
+        }
+        if(!"Todos".equals(sTurno)){
+            where+=" AND turno=:turno"; 
+        }
+        query = session.createQuery("SELECT u.idUsuario, u.apellido, u.nombre,u.turno,u.username, MAXELEMENT(passwords) FROM bedel u "+where+"  GROUP BY u.idUsuario");
+
+        if(!sApellido.isEmpty()){
+            query.setParameter( "apellido", sApellido);
+        }
+        if(!"Todos".equals(sTurno)){
+            query.setParameter( "turno", sTurno);
+        }
+        
+        List<bedelDTO> bedelList = new ArrayList<bedelDTO>();
+        bedelDTO temp = null;
+        try {
+            
+            List<Object[]> bedeles = query.getResultList();
+            for (Object[] bedel : bedeles) {
+                System.out.println(bedel[1].toString() + ", "  + bedel[2].toString()+" / "+bedel[3].toString()+" / "+bedel[4]+" / "+((password)bedel[5]).getCodigo());
+                temp = new bedelDTO((int) bedel[0],bedel[1].toString(),bedel[2].toString(),bedel[3].toString(),bedel[4].toString(),((password)bedel[5]).getCodigo());
+                bedelList.add(temp);
+                temp = null;
+            }
+            session.close();
+            return bedelList;
+  
+         
+        } catch (NoResultException nre) {
+            session.close();
+            return null;
+        }
+        
+    }
+    
+    public static bedel getBedel(String username){
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT u FROM bedel u WHERE u.username=:username");
+        query.setParameter( "username", username);
+       
+        bedel Bedel = (bedel) query.getSingleResult();
+        session.close();
+        return Bedel;
+    }
+    
     
 }

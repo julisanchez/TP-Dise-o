@@ -8,18 +8,19 @@ package Interfaces;
 import DTO.bedelDTO;
 import Logica.gestorUsuario;
 import javax.swing.JOptionPane;
+import Interfaces.buscarBedel;
 
 
 /**
  *
  * @author Alexis Mandracchia
  */
-public class registrarBedel extends javax.swing.JFrame{
+public class modificarBedel extends javax.swing.JFrame{
 
     /**
      * Creates new form menuBedel
      */
-    public registrarBedel() {
+    public modificarBedel() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.vacioApellido.setVisible(false);
@@ -27,11 +28,17 @@ public class registrarBedel extends javax.swing.JFrame{
         this.vacioUsuario.setVisible(false);
         this.vacioPass.setVisible(false);
         this.vacioConfPass.setVisible(false);
-        this.creando.setVisible(false);
+        String username = buscarBedel.userSelected.getUsername();
+        usuarioText.setText(username);
+        apellidoText.setText(buscarBedel.userSelected.getApellido());
+        nombresText.setText(buscarBedel.userSelected.getNombre());
+        turnoCombo.setSelectedItem(buscarBedel.userSelected.getTurno());
+        pwText.setText(buscarBedel.userSelected.getPass());
+        pwConfirText.setText(buscarBedel.userSelected.getPass());
     }
  
     
-    private boolean validaDatos(String sApellido, String sNombres, String sUsuario, String sPass, String sConfPass, String sTurno){
+    public boolean validaDatos(String sApellido, String sNombres, String sUsuario, String sPass, String sConfPass, String sTurno){
         boolean vacio=false;
         if(sNombres.equals("")){
             this.vacioNombres.setVisible(true);
@@ -116,7 +123,6 @@ public class registrarBedel extends javax.swing.JFrame{
         vacioUsuario = new javax.swing.JLabel();
         vacioPass = new javax.swing.JLabel();
         vacioConfPass = new javax.swing.JLabel();
-        creando = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -125,11 +131,11 @@ public class registrarBedel extends javax.swing.JFrame{
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Registrar Bedel");
+        jLabel1.setText("Modificar Bedel");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 230, 40));
 
         logoUTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoUTN_200px.png"))); // NOI18N
-        getContentPane().add(logoUTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        getContentPane().add(logoUTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,7 +144,7 @@ public class registrarBedel extends javax.swing.JFrame{
 
         jLabel4.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Ingrese los datos del nuevo Bedel:");
+        jLabel4.setText("Los datos del bedel a modificar son:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
@@ -183,6 +189,7 @@ public class registrarBedel extends javax.swing.JFrame{
         turnoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mañana", "Tarde", "Tarde-Noche", "Noche" }));
         getContentPane().add(turnoCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 140, -1));
 
+        usuarioText.setEnabled(false);
         usuarioText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 usuarioTextKeyTyped(evt);
@@ -231,7 +238,7 @@ public class registrarBedel extends javax.swing.JFrame{
                 aceptarButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(aceptarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 90, 30));
+        getContentPane().add(aceptarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 90, 30));
 
         cancelarButton.setBackground(new java.awt.Color(255, 0, 0));
         cancelarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -250,7 +257,7 @@ public class registrarBedel extends javax.swing.JFrame{
                 cancelarButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, -1, 30));
+        getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, -1, 30));
 
         jLabel9.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -282,11 +289,6 @@ public class registrarBedel extends javax.swing.JFrame{
         vacioConfPass.setText("(*)");
         getContentPane().add(vacioConfPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, 30));
 
-        creando.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
-        creando.setForeground(new java.awt.Color(255, 255, 255));
-        creando.setText("Creando Bedel, por favor espere...");
-        getContentPane().add(creando, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 410, 360, 20));
-
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/simple-blue-ii.jpg"))); // NOI18N
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500));
 
@@ -306,9 +308,7 @@ public class registrarBedel extends javax.swing.JFrame{
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
     private void cancelarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarButtonMouseClicked
-        menuAdmin obj = new menuAdmin(); 
-        obj.setVisible(true);
-        this.dispose();
+       this.dispose();
     }//GEN-LAST:event_cancelarButtonMouseClicked
 
     
@@ -338,32 +338,18 @@ public class registrarBedel extends javax.swing.JFrame{
             Bedel.setUsername(sUsuario);
             Bedel.setPass(sPass);
             Bedel.setTurno(sTurno);         
-            
-            
-            this.creando.setVisible(true);
+            Bedel.setId(buscarBedel.userSelected.getId());
             gestorUsuario gestor = new gestorUsuario();
-            int salida = gestor.registrar(Bedel);
-            
-            if(salida==0){
-                JOptionPane.showMessageDialog(null,"El usuario se creo correctamente","Usuario creado",JOptionPane.PLAIN_MESSAGE);
-            }else{
-                if(salida==1){
-                    JOptionPane.showMessageDialog(null,"Ya existe un usuario con ese nombre","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
-                }else{
-                    if(salida==2){
-                       JOptionPane.showMessageDialog(null,"La contraseña no respeta las politicas","Mensaje de Error",JOptionPane.ERROR_MESSAGE); 
-                    }
-                    else if(salida==3){
-                        JOptionPane.showMessageDialog(null,"El usuario no se a podido crear","Mensaje de Error",JOptionPane.ERROR_MESSAGE); 
-
-                    } else{
-                        JOptionPane.showMessageDialog(null,"Error en el metodo crear bedel","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+            int resultado = gestor.modificar(Bedel);
+            if(resultado==0) JOptionPane.showMessageDialog(null,"La contraseña no respeta las politicas","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            else if(resultado==1){
+                JOptionPane.showMessageDialog(null,"El usuario se actualizó correctamente","Usuario actualizado",JOptionPane.PLAIN_MESSAGE);
+                this.dispose();
             }
-            this.creando.setVisible(false);
-        }
-        
+            else JOptionPane.showMessageDialog(null,"No se ha podido actualizar los datos","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            
+            
+        }        
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void aceptarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarButtonMouseClicked
@@ -427,14 +413,18 @@ public class registrarBedel extends javax.swing.JFrame{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(registrarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(registrarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(registrarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(registrarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarBedel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -443,7 +433,7 @@ public class registrarBedel extends javax.swing.JFrame{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new registrarBedel().setVisible(true);
+                new modificarBedel().setVisible(true);
             }
         });
     }
@@ -453,7 +443,6 @@ public class registrarBedel extends javax.swing.JFrame{
     private javax.swing.JButton aceptarButton;
     private javax.swing.JTextField apellidoText;
     private javax.swing.JButton cancelarButton;
-    private javax.swing.JLabel creando;
     private javax.swing.JLabel fondo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

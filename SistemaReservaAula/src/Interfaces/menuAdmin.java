@@ -29,7 +29,6 @@ public class menuAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        nombreUsuario = new javax.swing.JLabel();
         cerrarSesion = new javax.swing.JButton();
         irReserva = new javax.swing.JButton();
         irBuscarAula = new javax.swing.JButton();
@@ -45,11 +44,6 @@ public class menuAdmin extends javax.swing.JFrame {
         jLabel1.setText("Menú Admin");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 130, 30));
 
-        nombreUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        nombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        nombreUsuario.setText("nombreUsuario");
-        getContentPane().add(nombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
-
         cerrarSesion.setBackground(new java.awt.Color(51, 51, 255));
         cerrarSesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         cerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
@@ -57,6 +51,11 @@ public class menuAdmin extends javax.swing.JFrame {
         cerrarSesion.setBorderPainted(false);
         cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cerrarSesion.setOpaque(true);
+        cerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesionActionPerformed(evt);
+            }
+        });
         getContentPane().add(cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 110, 30));
 
         irReserva.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -77,10 +76,15 @@ public class menuAdmin extends javax.swing.JFrame {
         getContentPane().add(irReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 220, 50));
 
         irBuscarAula.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        irBuscarAula.setText("MODIFICAR/ELIMINAR BEDEL");
+        irBuscarAula.setText("BUSCAR BEDEL");
         irBuscarAula.setBorder(null);
         irBuscarAula.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         irBuscarAula.setOpaque(true);
+        irBuscarAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                irBuscarAulaActionPerformed(evt);
+            }
+        });
         getContentPane().add(irBuscarAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 220, 50));
 
         logoUTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoUTN_200px.png"))); // NOI18N
@@ -94,8 +98,6 @@ public class menuAdmin extends javax.swing.JFrame {
 
     private void irReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irReservaActionPerformed
         // TODO add your handling code here:
-        new registrarBedel().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_irReservaActionPerformed
 
     private void irReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_irReservaMouseClicked
@@ -104,6 +106,17 @@ public class menuAdmin extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_irReservaMouseClicked
+
+    private void irBuscarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irBuscarAulaActionPerformed
+        buscarBedel bedel = new buscarBedel();
+        bedel.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_irBuscarAulaActionPerformed
+
+    private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_cerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,6 +161,5 @@ public class menuAdmin extends javax.swing.JFrame {
     private javax.swing.JButton irReserva;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel logoUTN;
-    private javax.swing.JLabel nombreUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,18 +5,34 @@
  */
 package Interfaces;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Alexis Mandracchia
  */
+
 public class registrarReserva extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form menuBedel
      */
     public registrarReserva() {
         initComponents();
+        
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        
         this.setLocationRelativeTo(null);
+        this.esporadica.setSelected(true);
+        this.fechaCombo.setDate(new Date());
+        this.errorFecha.setVisible(false);
+        this.errorDuracion.setVisible(false);
+        this.errorHorario.setVisible(false);
     }
 
     /**
@@ -28,23 +44,40 @@ public class registrarReserva extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        reserva = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         logoUTN = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        tipoReserva = new javax.swing.JComboBox<>();
-        deEspo = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        deEspo = new javax.swing.JLabel();
+        fechaCombo = new com.toedter.calendar.JDateChooser();
         horarioEspo = new javax.swing.JLabel();
         horariosEspo = new javax.swing.JFormattedTextField();
         duracionEspo = new javax.swing.JFormattedTextField();
         horarioEspo1 = new javax.swing.JLabel();
         horarioEspo2 = new javax.swing.JLabel();
         horarioEspo3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        listaFechas = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         agregarEspo = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
+        cant_alumnos = new javax.swing.JLabel();
+        cantAlumnosText = new javax.swing.JTextField();
+        cant_alumnos1 = new javax.swing.JLabel();
+        tipoAulaCombo = new javax.swing.JComboBox<>();
+        cant_alumnos2 = new javax.swing.JLabel();
+        cant_alumnos3 = new javax.swing.JLabel();
+        docenteCombo = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
+        cant_alumnos4 = new javax.swing.JLabel();
+        catedraCombo = new javax.swing.JComboBox<>();
+        aceptarButton = new javax.swing.JButton();
+        cancelarButton = new javax.swing.JButton();
+        periodica = new javax.swing.JRadioButton();
+        esporadica = new javax.swing.JRadioButton();
+        errorFecha = new javax.swing.JLabel();
+        errorHorario = new javax.swing.JLabel();
+        errorDuracion = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,22 +95,22 @@ public class registrarReserva extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Seleccione tipo de reserva:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 20));
-
-        tipoReserva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Esporádica", "Periodica" }));
-        getContentPane().add(tipoReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 120, 20));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, 30));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 570, 10));
 
         deEspo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         deEspo.setForeground(new java.awt.Color(255, 255, 255));
         deEspo.setText("Escriba la fecha deseada:");
-        getContentPane().add(deEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 20));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 470, 10));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 120, 20));
+        getContentPane().add(deEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 30));
+
+        fechaCombo.setMaxSelectableDate(new java.util.Date(2524622517000L));
+        fechaCombo.setMinSelectableDate(new java.util.Date(-62135755083000L));
+        getContentPane().add(fechaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 120, 30));
 
         horarioEspo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         horarioEspo.setForeground(new java.awt.Color(255, 255, 255));
         horarioEspo.setText("hs");
-        getContentPane().add(horarioEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, 20));
+        getContentPane().add(horarioEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, 30));
 
         try {
             horariosEspo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -93,22 +126,22 @@ public class registrarReserva extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         duracionEspo.setText("02:00");
-        getContentPane().add(duracionEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 50, -1));
+        getContentPane().add(duracionEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 50, -1));
 
         horarioEspo1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         horarioEspo1.setForeground(new java.awt.Color(255, 255, 255));
         horarioEspo1.setText("Horario:");
-        getContentPane().add(horarioEspo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, 20));
+        getContentPane().add(horarioEspo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, 30));
 
         horarioEspo2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         horarioEspo2.setForeground(new java.awt.Color(255, 255, 255));
         horarioEspo2.setText("Duración:");
-        getContentPane().add(horarioEspo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, -1, 20));
+        getContentPane().add(horarioEspo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, -1, 30));
 
         horarioEspo3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         horarioEspo3.setForeground(new java.awt.Color(255, 255, 255));
         horarioEspo3.setText("hs");
-        getContentPane().add(horarioEspo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, 20));
+        getContentPane().add(horarioEspo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,21 +166,298 @@ public class registrarReserva extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        listaFechas.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 80));
+        getContentPane().add(listaFechas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 300, 120));
 
         agregarEspo.setText("Agregar");
         agregarEspo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        getContentPane().add(agregarEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 470, 10));
+        agregarEspo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarEspoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(agregarEspo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, -1, -1));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 10));
+
+        cant_alumnos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cant_alumnos.setForeground(new java.awt.Color(255, 255, 255));
+        cant_alumnos.setText("Nombre de cátedra/seminario/curso:");
+        getContentPane().add(cant_alumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, -1, 30));
+
+        cantAlumnosText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantAlumnosTextActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cantAlumnosText, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 60, -1));
+
+        cant_alumnos1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cant_alumnos1.setForeground(new java.awt.Color(255, 255, 255));
+        cant_alumnos1.setText("Cantidad de alumnos:");
+        getContentPane().add(cant_alumnos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, 30));
+
+        tipoAulaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin recursos adicionales", "Informática", "Multimedios" }));
+        tipoAulaCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoAulaComboActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tipoAulaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, 170, 30));
+
+        cant_alumnos2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cant_alumnos2.setForeground(new java.awt.Color(255, 255, 255));
+        cant_alumnos2.setText("Tipo de aula:");
+        getContentPane().add(cant_alumnos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, -1, 30));
+
+        cant_alumnos3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cant_alumnos3.setForeground(new java.awt.Color(255, 255, 255));
+        cant_alumnos3.setText("Apellido y Nombre del docente:");
+        getContentPane().add(cant_alumnos3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, 30));
+
+        docenteCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(docenteCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 150, 30));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 410, 180, -1));
+
+        cant_alumnos4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cant_alumnos4.setForeground(new java.awt.Color(255, 255, 255));
+        cant_alumnos4.setText("Email del docente:");
+        getContentPane().add(cant_alumnos4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, -1, 30));
+
+        catedraCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(catedraCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 450, 150, -1));
+
+        aceptarButton.setBackground(new java.awt.Color(0, 204, 0));
+        aceptarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        aceptarButton.setForeground(new java.awt.Color(255, 255, 255));
+        aceptarButton.setText("Aceptar");
+        aceptarButton.setBorderPainted(false);
+        aceptarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        aceptarButton.setOpaque(true);
+        aceptarButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aceptarButtonMouseClicked(evt);
+            }
+        });
+        aceptarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(aceptarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 490, 90, 30));
+
+        cancelarButton.setBackground(new java.awt.Color(255, 0, 0));
+        cancelarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cancelarButton.setForeground(new java.awt.Color(255, 255, 255));
+        cancelarButton.setText("Cancelar");
+        cancelarButton.setBorderPainted(false);
+        cancelarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelarButton.setOpaque(true);
+        cancelarButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelarButtonMouseClicked(evt);
+            }
+        });
+        cancelarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 490, -1, 30));
+
+        reserva.add(periodica);
+        periodica.setForeground(new java.awt.Color(255, 255, 255));
+        periodica.setText("Periodica");
+        periodica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                periodicaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(periodica, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 90, -1));
+
+        reserva.add(esporadica);
+        esporadica.setForeground(new java.awt.Color(255, 255, 255));
+        esporadica.setText("Esporádica");
+        esporadica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                esporadicaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(esporadica, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+
+        errorFecha.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        errorFecha.setForeground(new java.awt.Color(255, 0, 0));
+        errorFecha.setText("(*)");
+        getContentPane().add(errorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 20, 30));
+
+        errorHorario.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        errorHorario.setForeground(new java.awt.Color(255, 0, 0));
+        errorHorario.setText("(*)");
+        getContentPane().add(errorHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 20, 30));
+
+        errorDuracion.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        errorDuracion.setForeground(new java.awt.Color(255, 0, 0));
+        errorDuracion.setText("(*)");
+        getContentPane().add(errorDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 20, 20));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/simple-blue-ii.jpg"))); // NOI18N
-        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500));
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cantAlumnosTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantAlumnosTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cantAlumnosTextActionPerformed
+
+    private void aceptarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarButtonMouseClicked
+
+    }//GEN-LAST:event_aceptarButtonMouseClicked
+
+    private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
+        String cant_alumnos = this.cantAlumnosText.getText();
+        
+        
+        if (this.validarcampos()){
+            
+        }
+    }//GEN-LAST:event_aceptarButtonActionPerformed
+    private boolean validarcampos(){
+        
+        return true;
+    }
+    private void cancelarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarButtonMouseClicked
+        menuAdmin obj = new menuAdmin();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cancelarButtonMouseClicked
+
+    private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void periodicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_periodicaActionPerformed
+        this.deEspo.setVisible(false);
+        this.duracionEspo.setVisible(false);
+        this.fechaCombo.setVisible(false);
+        this.horarioEspo.setVisible(false);
+        this.horarioEspo1.setVisible(false);
+        this.horarioEspo3.setVisible(false);
+        this.horarioEspo2.setVisible(false);
+        this.horariosEspo.setVisible(false);
+        this.listaFechas.setVisible(false);
+        this.agregarEspo.setVisible(false);
+        
+    }//GEN-LAST:event_periodicaActionPerformed
+
+    private void esporadicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esporadicaActionPerformed
+        this.deEspo.setVisible(true);
+        this.duracionEspo.setVisible(true);
+        this.fechaCombo.setVisible(true);
+        this.horarioEspo.setVisible(true);
+        this.horarioEspo1.setVisible(true);
+        this.horarioEspo3.setVisible(true);
+        this.horarioEspo2.setVisible(true);
+        this.horariosEspo.setVisible(true);
+        this.listaFechas.setVisible(true);
+        this.agregarEspo.setVisible(true);
+    }//GEN-LAST:event_esporadicaActionPerformed
+
+    private void agregarEspoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarEspoActionPerformed
+        Date fecha = this.fechaCombo.getDate();
+        String hora = this.horariosEspo.getText();
+        String duracion = this.duracionEspo.getText();
+        Date fhoy = new Date();
+        
+        this.errorFecha.setVisible(false);
+        this.errorDuracion.setVisible(false);
+        this.errorHorario.setVisible(false);
+        
+        boolean aux =false;
+        
+        if(fecha == null){
+            JOptionPane.showMessageDialog(null,"El campo fecha, no puede estar vacio","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            this.errorFecha.setVisible(true);
+            aux=true;
+        }
+        if(fhoy.after(fecha)){ //evaluar si es fecha es anterior o igual a la actual
+            JOptionPane.showMessageDialog(null,"Fecha erronea","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            this.errorFecha.setVisible(true);
+            aux=true;
+        }
+        if (!validarHorario(hora)){
+            JOptionPane.showMessageDialog(null,"Horario erroneo","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            this.errorHorario.setVisible(true);
+            aux=true;
+        }
+        if(!validarDuracion(duracion)){
+            JOptionPane.showMessageDialog(null,"Duracion erronea","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            this.errorDuracion.setVisible(true);
+            aux=true;
+        }
+        String sFecha = this.fechaCombo.getDateFormatString();
+        if(!aux){
+        //TODO OK, LLAMAR FUNCION AGREGAR
+        agregarFila(fecha, hora, duracion);
+        }          
+        
+    }//GEN-LAST:event_agregarEspoActionPerformed
+       
+    public void agregarFila(String fecha, String hora, String duracion){
+        
+    }
+    private void tipoAulaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoAulaComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tipoAulaComboActionPerformed
+    private static boolean validarHorario(String hora){
+           int horas=0;
+           int minutos=0;
+           String horasStr = hora.substring(0,2);
+           String minutosStr = hora.substring(3,5);
+           try {
+               horas = Integer.parseInt(horasStr);
+               minutos = Integer.parseInt(minutosStr);
+           } catch (Exception e) {
+               return false;
+           }
+               if (horas < 0 || horas > 23)
+               {
+                   return false;
+               }
+               else
+               {
+                   if (minutos <0 || minutos >59)
+                   {
+                        return false;
+                   }
+               }
+            return true;
+    }
+    private static boolean validarDuracion(String duracion){
+        int dhoras=0;
+        int dminutos=0;
+        String dhorasStr = duracion.substring(0,2);
+        String dminutosStr = duracion.substring(3, 5);
+        try {
+               dhoras = Integer.parseInt(dhorasStr);
+               dminutos = Integer.parseInt(dminutosStr);
+           } catch (Exception e) {
+               return false;
+           }
+               if (dhoras < 0 || dhoras > 23) //duda con esto
+               {
+                   return false;
+               }
+               else
+               {
+                   if (dminutos <0 || dminutos >59)
+                   {
+                        return false;
+                   }
+               }
+            return true;
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -185,23 +495,44 @@ public class registrarReserva extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aceptarButton;
     private javax.swing.JButton agregarEspo;
+    private javax.swing.JButton cancelarButton;
+    private javax.swing.JTextField cantAlumnosText;
+    private javax.swing.JLabel cant_alumnos;
+    private javax.swing.JLabel cant_alumnos1;
+    private javax.swing.JLabel cant_alumnos2;
+    private javax.swing.JLabel cant_alumnos3;
+    private javax.swing.JLabel cant_alumnos4;
+    private javax.swing.JComboBox<String> catedraCombo;
     private javax.swing.JLabel deEspo;
+    private javax.swing.JComboBox<String> docenteCombo;
     private javax.swing.JFormattedTextField duracionEspo;
+    private javax.swing.JLabel errorDuracion;
+    private javax.swing.JLabel errorFecha;
+    private javax.swing.JLabel errorHorario;
+    private javax.swing.JRadioButton esporadica;
+    private com.toedter.calendar.JDateChooser fechaCombo;
     private javax.swing.JLabel fondo;
     private javax.swing.JLabel horarioEspo;
     private javax.swing.JLabel horarioEspo1;
     private javax.swing.JLabel horarioEspo2;
     private javax.swing.JLabel horarioEspo3;
     private javax.swing.JFormattedTextField horariosEspo;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane listaFechas;
     private javax.swing.JLabel logoUTN;
-    private javax.swing.JComboBox<String> tipoReserva;
+    private javax.swing.JRadioButton periodica;
+    private javax.swing.ButtonGroup reserva;
+    private javax.swing.JComboBox<String> tipoAulaCombo;
     // End of variables declaration//GEN-END:variables
+
+    private void agregarFila(Date fecha, String hora, String duracion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

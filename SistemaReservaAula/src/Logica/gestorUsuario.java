@@ -5,7 +5,13 @@
  */
 package Logica;
 
-import Interfaces.menuAdmin;
+import DTO.bedelDTO;
+import Datos.bedel;
+import Datos.password;
+import Datos.usuario;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,19 +19,71 @@ import javax.swing.JOptionPane;
  * @author julisanchez
  */
 public class gestorUsuario {
-    public void registrar(DTO.bedelDTO Bedel){
+    public int registrar(DTO.bedelDTO Bedel){
         usuarioDAO usuario = new usuarioDAO();
-        
         if(!usuario.validarU(Bedel.getUsername())){ //validar si ya exite un username.Devuelve #T no existe, #F lo contrario.
-            JOptionPane.showMessageDialog(null,"Ya existe un usuario con ese nombre.","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null,"Ya existe un usuario con ese nombre","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            return 1;
         }
-        else if(usuario.crearBedel(Bedel)){
-            JOptionPane.showMessageDialog(null,"El usuario se creó correctamente.","Usuario creado",JOptionPane.PLAIN_MESSAGE);
+        else if(!politicasDeContrasenia.validarC(Bedel.getPass(),Bedel.getUsername())){
+            return 2;
+        }
+        else if(crearBedel(Bedel)){
+            //JOptionPane.showMessageDialog(null,"El usuario se creo correctamente","Usuario creado",JOptionPane.PLAIN_MESSAGE);
+            return 0;
+            }
+            else{
+                //JOptionPane.showMessageDialog(null,"El usuario no se a podido crear","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            return 3;
+            }
+    }
+    public boolean crearBedel(bedelDTO registrarBedelDTO){
+        
+        bedel Bedel = new bedel();
+        
+        Bedel.setApellido(registrarBedelDTO.getApellido());
+        Bedel.setNombre(registrarBedelDTO.getNombre());
+        Bedel.setTurno(registrarBedelDTO.getTurno());
+        Bedel.setActivo(true);
+        Bedel.setUsername(registrarBedelDTO.getUsername());
+        
+        password Password = new password();
+        
+        Password.setCodigo(registrarBedelDTO.getPass());
+        Password.setFechaCreacion(LocalDateTime.now());
+        
+        List<password> Passwords = new ArrayList<>();
+        Passwords.add(Password);
+        
+        Bedel.setPasswords(Passwords);
+         
+        usuarioDAO usuario = new usuarioDAO();
+        return usuario.guardar(Bedel);
+        
+    }
+    
+    public List<bedelDTO> buscar(String sApellido, String sTurno){
+        usuarioDAO usuario = new usuarioDAO();
+        List<bedelDTO> bedeles;
+        bedeles = usuario.buscarBedeles(sApellido, sTurno);
+        return bedeles;
+    } 
+    
+    public int modificar(bedelDTO bedelNuevo){
+        
+        bedel bedelViejo = usuarioDAO.getBedel(bedelNuevo.getUsername());
+        if(!bedelViejo.getPassword().getCodigo().equals(bedelNuevo.getPass())){
+            if(!politicasDeContrasenia.validarC(bedelNuevo.getPass(),bedelNuevo.getUsername())) return 0;
+            password pass = new password(bedelNuevo.getPass());
+            bedelViejo.addHistorial(pass);
             
-            new menuAdmin().setVisible(true);
+        }
+        bedelViejo.modificar(bedelNuevo);
+        if(usuarioDAO.guardar(bedelViejo)){
+            return 1;
         }
         else{
-            JOptionPane.showMessageDialog(null,"El usuario no se ha podido crear.","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            return 2;
         }
-    }
+    } 
 }

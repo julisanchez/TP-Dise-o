@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.Type;
@@ -35,7 +36,7 @@ public class aula implements Serializable {
     private String pizarron;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idAula")
-    @IndexColumn(name="idx")
+    @OrderColumn
     private List<en> ens;
 
     public aula() {

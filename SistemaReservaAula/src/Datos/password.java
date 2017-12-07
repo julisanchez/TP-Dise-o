@@ -33,6 +33,11 @@ public class password implements Serializable {
 
     public password() {
     }
+    
+    public password(String pass){
+        this.codigo = pass;
+        this.fechaCreacion = LocalDateTime.now();
+    }
 
     public String getCodigo() {
         return codigo;

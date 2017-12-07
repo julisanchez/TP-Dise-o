@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sistemareservaaula;
 
-import Interfaces.menuAdmin;
-import Interfaces.menuCarga;
-import Interfaces.registrarBedel;
+
+import Interfaces.menuInicio;
 import Logica.conexion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +23,6 @@ public class SistemaReservaAula {
     
     public static void main(String[] args) {
         
-        menuCarga obj = new menuCarga();
-        obj.setVisible(true);
         conexion conex = conexion.getInstance();
         
         try {
@@ -34,8 +30,8 @@ public class SistemaReservaAula {
         } catch (Exception ex) {
             Logger.getLogger(SistemaReservaAula.class.getName()).log(Level.SEVERE, null, ex);
         }
-        obj.dispose();
-        new menuAdmin().setVisible(true);
+        
+        new menuInicio().setVisible(true);
         
     }
     

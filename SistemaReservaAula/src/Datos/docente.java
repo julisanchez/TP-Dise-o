@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
 
@@ -29,7 +30,7 @@ public class docente implements Serializable {
     private String email;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="docente")
-    @IndexColumn(name="idx")
+    @OrderColumn
     private List<reserva> reservas;
 
     public docente() {

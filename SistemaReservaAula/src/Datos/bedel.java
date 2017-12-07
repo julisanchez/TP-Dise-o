@@ -5,12 +5,14 @@
  */
 package Datos;
 
+import DTO.bedelDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.Type;
@@ -28,7 +30,7 @@ public class bedel extends usuario implements Serializable {
     private boolean activo;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="bedel")
-    @IndexColumn(name="idx")
+    @OrderColumn
     private List<reserva> reservas;
 
     public bedel() {
@@ -81,4 +83,9 @@ public class bedel extends usuario implements Serializable {
         this.reservas = reservas;
     }
     
+    public void modificar(bedelDTO bedel){
+        this.apellido = bedel.getApellido();
+        this.nombre = bedel.getNombre();
+        this.turno = bedel.getTurno();
+    }
 }

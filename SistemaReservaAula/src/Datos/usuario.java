@@ -7,7 +7,6 @@ package Datos;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import org.hibernate.annotations.IndexColumn;
+import javax.persistence.OrderColumn;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 
@@ -38,7 +39,8 @@ public class usuario implements Serializable {
     
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="usuario")
-    @IndexColumn(name="idx")
+    @OrderColumn
+    @Fetch(FetchMode.JOIN)
     private List<password> passwords;
 
     public usuario() {
@@ -59,7 +61,23 @@ public class usuario implements Serializable {
     public void setPasswords(List<password> passwords) {
         this.passwords = passwords;
     }
-     
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    
+    public void addHistorial(password Pass){
+        passwords.add(Pass);
+    }
+    
+    public password getPassword(){
+        System.out.println(this.passwords.get(passwords.size()-1));
+        return this.passwords.get(passwords.size()-1);
+    }
     
 }
 
