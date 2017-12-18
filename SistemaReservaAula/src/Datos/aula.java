@@ -25,15 +25,15 @@ import org.hibernate.annotations.Type;
 @Table
 public class aula implements Serializable {
     @Id
-    private int idAula;
+    public int idAula;
     private int num;
     private int piso;
     private int capacidad;
-    @Type(type="yes_no")
+    @Type(type="boolean")
     private Boolean estado;
-    @Type(type="yes_no")
+    @Type(type="boolean")
     private Boolean ac;
-    private String pizarron;
+    private int pizarron;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idAula")
     @OrderColumn

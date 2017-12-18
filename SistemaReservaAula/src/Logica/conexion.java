@@ -18,7 +18,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  */
 public class conexion {
     
-    private static conexion connection = new conexion();
+    private static final conexion connection = new conexion();
     
     private conexion(){}
     
@@ -26,7 +26,7 @@ public class conexion {
     
     public static conexion getInstance( ) {
       return connection;
-   }
+    }
     
     public void setUp() throws Exception {
 	// A SessionFactory is set up once for an application!
@@ -40,6 +40,7 @@ public class conexion {
 		// The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
 		// so destroy it manually.
 		StandardServiceRegistryBuilder.destroy( registry );
+                System.out.println(e);
 	}
     }
 

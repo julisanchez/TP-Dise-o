@@ -6,6 +6,8 @@
 package Datos;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -25,21 +29,26 @@ public class en implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name="idAula")
-    private aula idAula;
+    @Fetch(FetchMode.JOIN)
+    public aula idAula;
     @Id
     @ManyToOne
     @JoinColumn(name="idReserva")
-    private reserva idReserva;
+    @Fetch(FetchMode.JOIN)
+    public reserva idReserva;
     @ManyToOne
     @JoinColumn(name="idPeriodo")
-    private periodo idPeriodo;
-    private String fecha;
+    @Fetch(FetchMode.JOIN)
+    public periodo idPeriodo;
+    public String fecha;
+    @Temporal(TemporalType.TIMESTAMP)
+    public Calendar horario;
     @Temporal(TemporalType.TIME)
-    private Date horario;
-    @Temporal(TemporalType.TIME)
-    private Date duracion;
-    private String tipo;
+    public Date duracion;
+    public String tipo;
 
     public en() {
     }
+    
+    
 }

@@ -15,7 +15,6 @@ import javax.persistence.Table;
  */
 @Entity
 public class admin extends usuario implements Serializable{
-    private int usuario;
 
     public admin() {
     }

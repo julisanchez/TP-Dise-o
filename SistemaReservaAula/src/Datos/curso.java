@@ -7,7 +7,6 @@ package Datos;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  *
@@ -16,7 +15,6 @@ import javax.persistence.Table;
 @Entity
 public class curso extends clase implements Serializable {
     private String profesores;
-    private int clase;
 
     public curso() {
     }

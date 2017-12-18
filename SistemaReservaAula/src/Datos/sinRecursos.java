@@ -16,7 +16,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 public class sinRecursos extends aula implements Serializable {
-    @Type(type="yes_no")
+    @Type(type="boolean")
     private Boolean ventiladores;
 
     public sinRecursos() {

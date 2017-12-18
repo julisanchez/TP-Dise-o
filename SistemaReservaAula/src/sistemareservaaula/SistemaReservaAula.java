@@ -7,7 +7,6 @@ package sistemareservaaula;
 
 import Interfaces.menuAdmin;
 import Interfaces.menuCarga;
-import Interfaces.registrarBedel;
 import Logica.conexion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,8 +32,10 @@ public class SistemaReservaAula {
             conex.setUp();
         } catch (Exception ex) {
             Logger.getLogger(SistemaReservaAula.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         obj.dispose();
+      
         new menuAdmin().setVisible(true);
         
     }

@@ -6,7 +6,7 @@
 package Datos;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,7 +17,6 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.IndexColumn;
 
 /**
  *
@@ -27,16 +26,23 @@ import org.hibernate.annotations.IndexColumn;
 @Table
 public class periodo implements Serializable {
     @Id
-    private int idPeriodo;
+    public int idPeriodo;
     @Temporal(TemporalType.DATE)
-    private Date inicio;
+    public Calendar inicio;
     @Temporal(TemporalType.DATE)
-    private Date fin;
+    public Calendar fin;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idPeriodo")
     @OrderColumn
-    private List<en> ens;
+    public List<en> ens;
 
     public periodo() {
+    }
+    
+    public int getPeriodo(){
+        return idPeriodo/100;
+    }
+    public int getAnio(){
+        return 2000+(idPeriodo%100);
     }
 }

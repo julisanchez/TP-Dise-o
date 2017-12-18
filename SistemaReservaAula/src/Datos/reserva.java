@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
-import org.hibernate.annotations.IndexColumn;
 
 /**
  *
@@ -25,21 +24,21 @@ import org.hibernate.annotations.IndexColumn;
 @Table
 public class reserva implements Serializable {
     @Id
-    private int idReserva;
-    private int cantidadAlumnos;
+    public int idReserva;
+    public int cantidadAlumnos;
     @ManyToOne
     @JoinColumn(name="bedel")
-    private bedel bedel;
+    public bedel bedel;
     @ManyToOne
     @JoinColumn(name="docente")
-    private docente docente;
+    public docente docente;
     @ManyToOne
     @JoinColumn(name="clase")
-    private clase clase;
+    public clase clase;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idReserva")
     @OrderColumn
-    private List<en> ens;
+    public List<en> ens;
 
     public reserva() {
     }

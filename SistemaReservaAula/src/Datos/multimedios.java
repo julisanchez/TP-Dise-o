@@ -16,13 +16,13 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 public class multimedios extends aula implements Serializable {
-    @Type(type="yes_no")
+    @Type(type="boolean")
     private Boolean televisor;
-    @Type(type="yes_no")
+    @Type(type="boolean")
     private Boolean proyector;
-    @Type(type="yes_no")
+    @Type(type="boolean")
     private Boolean pc;
-    @Type(type="yes_no")
+    @Type(type="boolean")
     private Boolean dvd;
 
     public multimedios() {
