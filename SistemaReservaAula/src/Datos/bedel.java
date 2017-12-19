@@ -88,4 +88,5 @@ public class bedel extends usuario implements Serializable {
         this.nombre = bedel.getNombre();
         this.turno = bedel.getTurno();
     }
+
 }

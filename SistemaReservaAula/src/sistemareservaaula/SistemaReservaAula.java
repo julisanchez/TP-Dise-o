@@ -37,7 +37,8 @@ public class SistemaReservaAula {
         }
         obj.dispose();
       
-        new menuInicio().setVisible(true);
+        //new menuInicio().setVisible(true);
+        new menuAdmin().setVisible(true);
         
     }
     
