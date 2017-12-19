@@ -118,6 +118,10 @@ public class menuInicio extends javax.swing.JFrame {
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
         // TODO add your handling code here:
+        
+        if(!jTextField1.getText().isEmpty() && jPasswordField1.getPassword()!=null){
+            
+        }
 
     }//GEN-LAST:event_IngresarActionPerformed
 

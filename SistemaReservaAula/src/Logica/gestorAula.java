@@ -17,7 +17,7 @@ import java.util.List;
  * @author julisanchez
  */
 public class gestorAula {
-    public aula[] buscarDisponibilidad(condicionDTO condicion){
+    public static aula[] buscarDisponibilidad(condicionDTO condicion){
         aula[] aulas = new aula[3];
         
         List<Integer> idAulas = aulaDAO.buscarAula(condicion);

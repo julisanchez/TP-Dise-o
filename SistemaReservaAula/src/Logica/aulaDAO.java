@@ -44,4 +44,8 @@ public class aulaDAO {
         
         return lista;
     }
+
+    static aula getAula(Integer get) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

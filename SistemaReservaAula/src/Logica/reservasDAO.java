@@ -6,8 +6,10 @@
 package Logica;
 
 import Datos.en;
+import Datos.periodo;
 import Datos.reserva;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -40,5 +42,18 @@ public class reservasDAO {
         session.close();
         
         return lista;
+    }
+
+    static periodo getPeriodo(int idPeriodo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    //Busca el periodo cuatrimestral al que pertence la fecha
+    static periodo getPeriodo(Calendar fecha) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static void guardar(reserva nuevaReserva) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

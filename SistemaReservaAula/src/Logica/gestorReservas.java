@@ -1,7 +1,13 @@
 package Logica;
 
 import DTO.condicionDTO;
+import DTO.reservaDTO;
+import Datos.clase;
+import Datos.docente;
 import Datos.en;
+import Datos.periodo;
+import Datos.reserva;
+import Interfaces.menuBedel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,6 +18,43 @@ import java.util.List;
  */
 
 public class gestorReservas {
+    
+    public static void registrar(reservaDTO reserva){
+        
+        reserva nuevaReserva = new reserva();
+        nuevaReserva.cantidadAlumnos = reserva.getCant_alumnos();
+        nuevaReserva.clase = claseDAO.getClase(reserva.getIdClase());
+        nuevaReserva.docente = docenteDAO.getDocente(reserva.getIdDocente());
+        nuevaReserva.bedel = menuBedel.bedelOnline;
+        
+        periodo periodoReserva = new periodo();
+        
+        if(reserva.getTipo().equals("Periodica")){
+            periodoReserva = reservasDAO.getPeriodo(reserva.getIdPeriodo());
+        }
+        
+        for(int i=0; i<reserva.getHorarios().size(); i++){
+            en reservaEn = new en();
+            
+            reservaEn.tipo = reserva.getTipo();
+            reservaEn.horario = reserva.getHorarios().get(i);
+            reservaEn.duracion = reserva.getDuracion().get(i);
+            reservaEn.fecha = reserva.getFechas().get(i);
+            reservaEn.idAula = aulaDAO.getAula(reserva.getIdAulas().get(i));
+            
+            if(reserva.getTipo().equals("Periodica")){
+                reservaEn.idPeriodo = periodoReserva;
+            }
+            else{
+                reservaEn.idPeriodo = reservasDAO.getPeriodo(reserva.getHorarios().get(i));
+            }
+            
+            nuevaReserva.ens.add(reservaEn);
+        }
+        
+        reservasDAO.guardar(nuevaReserva);
+    }
+    
     //retorna las aulas disponibles por cada dia
     public static List<List<Integer>> buscarDisponibles(List<Integer> idAulas, condicionDTO condicion){
         List<en> reservas = reservasDAO.buscarReservas(idAulas);

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author julisanchez
  */
 public class gestorUsuario {
-    public int registrar(DTO.bedelDTO Bedel){
+    public static int registrar(DTO.bedelDTO Bedel){
         usuarioDAO usuario = new usuarioDAO();
         if(!usuario.validarU(Bedel.getUsername())){ //validar si ya exite un username.Devuelve #T no existe, #F lo contrario.
             //JOptionPane.showMessageDialog(null,"Ya existe un usuario con ese nombre","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
@@ -37,7 +37,7 @@ public class gestorUsuario {
             return 3;
             }
     }
-    public boolean crearBedel(bedelDTO registrarBedelDTO){
+    public static boolean crearBedel(bedelDTO registrarBedelDTO){
         
         bedel Bedel = new bedel();
         
@@ -69,7 +69,7 @@ public class gestorUsuario {
         return bedeles;
     } 
     
-    public int modificar(bedelDTO bedelNuevo){
+    public static int modificar(bedelDTO bedelNuevo){
         
         bedel bedelViejo = usuarioDAO.getBedel(bedelNuevo.getUsername());
         if(!bedelViejo.getPassword().getCodigo().equals(bedelNuevo.getPass())){
@@ -86,4 +86,8 @@ public class gestorUsuario {
             return 2;
         }
     } 
+    
+    public static <T extends usuario> T iniciarSesion(String usuario, String contrasenia){
+        
+    }
 }

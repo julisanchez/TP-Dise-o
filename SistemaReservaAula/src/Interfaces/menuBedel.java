@@ -5,6 +5,8 @@
  */
 package Interfaces;
 
+import Datos.bedel;
+
 /**
  *
  * @author Alexis Mandracchia
@@ -14,6 +16,8 @@ public class menuBedel extends javax.swing.JFrame {
     /**
      * Creates new form menuBedel
      */
+    public static final bedel bedelOnline;
+    
     public menuBedel() {
         initComponents();
         this.setLocationRelativeTo(null);

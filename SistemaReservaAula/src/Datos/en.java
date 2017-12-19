@@ -40,11 +40,15 @@ public class en implements Serializable {
     @JoinColumn(name="idPeriodo")
     @Fetch(FetchMode.JOIN)
     public periodo idPeriodo;
+    //Fecha es el dia de la semana, ej: Martes,Miercoles,Jueves,etc. Se usa tanto en esporadica como en periodica
     public String fecha;
     @Temporal(TemporalType.TIMESTAMP)
+    //Horario es la fecha conpleta de la clase con su dia, hora y minutos si es esporadica y si es periodica solamente la hora y los minutos
     public Calendar horario;
     @Temporal(TemporalType.TIME)
+    // Duracion es la duracion de la clase, ej: 2:30 hs
     public Date duracion;
+    //Esporadica o Periodica
     public String tipo;
 
     public en() {

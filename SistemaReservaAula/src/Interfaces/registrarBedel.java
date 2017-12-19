@@ -6,7 +6,7 @@
 package Interfaces;
 
 import DTO.bedelDTO;
-import Logica.gestorUsuario;
+import Clases.gestorUsuario;
 import javax.swing.JOptionPane;
 
 
@@ -27,11 +27,10 @@ public class registrarBedel extends javax.swing.JFrame{
         this.vacioUsuario.setVisible(false);
         this.vacioPass.setVisible(false);
         this.vacioConfPass.setVisible(false);
-        this.creando.setVisible(false);
     }
  
     
-    private boolean validaDatos(String sApellido, String sNombres, String sUsuario, String sPass, String sConfPass, String sTurno){
+    public boolean validaDatos(String sApellido, String sNombres, String sUsuario, String sPass, String sConfPass, String sTurno){
         boolean vacio=false;
         if(sNombres.equals("")){
             this.vacioNombres.setVisible(true);
@@ -116,7 +115,6 @@ public class registrarBedel extends javax.swing.JFrame{
         vacioUsuario = new javax.swing.JLabel();
         vacioPass = new javax.swing.JLabel();
         vacioConfPass = new javax.swing.JLabel();
-        creando = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -129,7 +127,7 @@ public class registrarBedel extends javax.swing.JFrame{
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 230, 40));
 
         logoUTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logoUTN_200px.png"))); // NOI18N
-        getContentPane().add(logoUTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        getContentPane().add(logoUTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -218,9 +216,7 @@ public class registrarBedel extends javax.swing.JFrame{
         aceptarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         aceptarButton.setForeground(new java.awt.Color(255, 255, 255));
         aceptarButton.setText("Aceptar");
-        aceptarButton.setBorderPainted(false);
         aceptarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        aceptarButton.setOpaque(true);
         aceptarButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 aceptarButtonMouseClicked(evt);
@@ -231,15 +227,13 @@ public class registrarBedel extends javax.swing.JFrame{
                 aceptarButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(aceptarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 90, 30));
+        getContentPane().add(aceptarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 90, 30));
 
         cancelarButton.setBackground(new java.awt.Color(255, 0, 0));
         cancelarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         cancelarButton.setForeground(new java.awt.Color(255, 255, 255));
         cancelarButton.setText("Cancelar");
-        cancelarButton.setBorderPainted(false);
         cancelarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cancelarButton.setOpaque(true);
         cancelarButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cancelarButtonMouseClicked(evt);
@@ -250,7 +244,7 @@ public class registrarBedel extends javax.swing.JFrame{
                 cancelarButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, -1, 30));
+        getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 420, 90, 30));
 
         jLabel9.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -260,32 +254,32 @@ public class registrarBedel extends javax.swing.JFrame{
         vacioApellido.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         vacioApellido.setForeground(new java.awt.Color(255, 0, 0));
         vacioApellido.setText("(*)");
+        vacioApellido.setBorder(null);
         getContentPane().add(vacioApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, 30));
 
         vacioNombres.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         vacioNombres.setForeground(new java.awt.Color(255, 0, 0));
         vacioNombres.setText("(*)");
+        vacioNombres.setBorder(null);
         getContentPane().add(vacioNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, -1, 30));
 
         vacioUsuario.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         vacioUsuario.setForeground(new java.awt.Color(255, 0, 0));
         vacioUsuario.setText("(*)");
+        vacioUsuario.setBorder(null);
         getContentPane().add(vacioUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, -1, 30));
 
         vacioPass.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         vacioPass.setForeground(new java.awt.Color(255, 0, 0));
         vacioPass.setText("(*)");
+        vacioPass.setBorder(null);
         getContentPane().add(vacioPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, -1, 30));
 
         vacioConfPass.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         vacioConfPass.setForeground(new java.awt.Color(255, 0, 0));
         vacioConfPass.setText("(*)");
+        vacioConfPass.setBorder(null);
         getContentPane().add(vacioConfPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, 30));
-
-        creando.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
-        creando.setForeground(new java.awt.Color(255, 255, 255));
-        creando.setText("Creando Bedel, por favor espere...");
-        getContentPane().add(creando, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 410, 360, 20));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/simple-blue-ii.jpg"))); // NOI18N
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500));
@@ -331,39 +325,20 @@ public class registrarBedel extends javax.swing.JFrame{
         
         if(!(this.validaDatos(sApellido, sNombre, sUsuario, sPass, sConfPass, sTurno))){
             //JOptionPane.showMessageDialog(null,"Todo es correcto","Todo OK",JOptionPane.INFORMATION_MESSAGE);
-            bedelDTO Bedel = new bedelDTO();
+            bedelDTO bedel = new bedelDTO();
             //bedel.setId();
-            Bedel.setApellido(sApellido);
-            Bedel.setNombre(sNombre);
-            Bedel.setUsername(sUsuario);
-            Bedel.setPass(sPass);
-            Bedel.setTurno(sTurno);         
+            bedel.setApellido(sApellido);
+            bedel.setNombre(sNombre);
+            bedel.setUsername(sUsuario);
+            bedel.setPass(sPass);
+            bedel.setTurno(sTurno);         
             
-            
-            this.creando.setVisible(true);
             gestorUsuario gestor = new gestorUsuario();
-            int salida = gestor.registrar(Bedel);
+            gestor.registrar(bedel);
             
-            if(salida==0){
-                JOptionPane.showMessageDialog(null,"El usuario se creo correctamente","Usuario creado",JOptionPane.PLAIN_MESSAGE);
-            }else{
-                if(salida==1){
-                    JOptionPane.showMessageDialog(null,"Ya existe un usuario con ese nombre","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
-                }else{
-                    if(salida==2){
-                       JOptionPane.showMessageDialog(null,"La contraseña no respeta las politicas","Mensaje de Error",JOptionPane.ERROR_MESSAGE); 
-                    }
-                    else if(salida==3){
-                        JOptionPane.showMessageDialog(null,"El usuario no se a podido crear","Mensaje de Error",JOptionPane.ERROR_MESSAGE); 
-
-                    } else{
-                        JOptionPane.showMessageDialog(null,"Error en el metodo crear bedel","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-            this.creando.setVisible(false);
-        }
-        
+            
+            
+        }        
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void aceptarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarButtonMouseClicked
@@ -453,7 +428,6 @@ public class registrarBedel extends javax.swing.JFrame{
     private javax.swing.JButton aceptarButton;
     private javax.swing.JTextField apellidoText;
     private javax.swing.JButton cancelarButton;
-    private javax.swing.JLabel creando;
     private javax.swing.JLabel fondo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
