@@ -17,20 +17,22 @@ import java.util.List;
  * @author julisanchez
  */
 public class gestorAula {
-    public static aula[] buscarDisponibilidad(condicionDTO condicion){
+    public static List<aula[]> buscarDisponibilidad(condicionDTO condicion){
         aula[] aulas = new aula[3];
+        List<aula[]> resultado = new ArrayList<>();
         
         List<Integer> idAulas = aulaDAO.buscarAula(condicion);
-        gestorReservas.buscarDisponibles(idAulas, condicion);
+        List<List<Integer>> aulasDisponibles = gestorReservas.buscarDisponibles(idAulas, condicion);
         
-        for(Calendar fecha:condicion.fechas){
-            
+        for(List<Integer> aulasPorDia : aulasDisponibles){
+            aulas = selecciona3(aulasPorDia);
+            resultado.add(aulas);
         }
         
-        return aulas;
+        return resultado;
     }
     
-    public aula[] selecciona3(){
+    public static aula[] selecciona3(List<Integer> aulasDisponibles){
         aula[] aulas = new aula[3];
         return aulas;
     }

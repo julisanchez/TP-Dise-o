@@ -7,6 +7,7 @@ package Interfaces;
 
 import DTO.condicionDTO;
 import DTO.reservaDTO;
+import Datos.aula;
 import Logica.gestorAula;
 import Logica.gestorReservas;
 import java.sql.Time;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -689,9 +691,7 @@ public class registrarReserva extends javax.swing.JFrame {
                     } 
                 }
                 
-                
-                
-                System.out.println(gestorAula.buscarDisponibilidad(condicion));
+                aula[] aulas = gestorAula.buscarDisponibilidad(condicion)
                 
                 reservaDTO reserva = new reservaDTO();
                 reserva.setTipo(tipo);

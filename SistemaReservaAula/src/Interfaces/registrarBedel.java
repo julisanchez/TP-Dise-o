@@ -6,7 +6,7 @@
 package Interfaces;
 
 import DTO.bedelDTO;
-import Clases.gestorUsuario;
+import Logica.gestorUsuario;
 import javax.swing.JOptionPane;
 
 

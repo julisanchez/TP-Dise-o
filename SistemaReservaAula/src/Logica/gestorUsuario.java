@@ -88,6 +88,10 @@ public class gestorUsuario {
     } 
     
     public static <T extends usuario> T iniciarSesion(String usuario, String contrasenia){
-        
+        return usuarioDAO.iniciarSesion(usuario, contrasenia);
+    }
+    
+    public static String getUserType(usuario user){
+        return usuarioDAO.getUserType(user);
     }
 }

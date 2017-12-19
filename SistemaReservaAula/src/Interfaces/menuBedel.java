@@ -16,7 +16,7 @@ public class menuBedel extends javax.swing.JFrame {
     /**
      * Creates new form menuBedel
      */
-    public static final bedel bedelOnline;
+    public static bedel bedelOnline;
     
     public menuBedel() {
         initComponents();
@@ -70,6 +70,11 @@ public class menuBedel extends javax.swing.JFrame {
         irReserva.setBorder(null);
         irReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         irReserva.setOpaque(true);
+        irReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                irReservaActionPerformed(evt);
+            }
+        });
         getContentPane().add(irReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 170, 50));
 
         irBuscarAula.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -101,6 +106,11 @@ public class menuBedel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void irReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irReservaActionPerformed
+        // TODO add your handling code here:
+        registrarReserva menuRegitrar = new registrarReserva();
+    }//GEN-LAST:event_irReservaActionPerformed
 
     /**
      * @param args the command line arguments

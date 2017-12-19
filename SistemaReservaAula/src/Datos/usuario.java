@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NaturalId;
 
 
 
@@ -35,6 +36,7 @@ public class usuario implements Serializable {
     private int idUsuario;
     
     @Column(unique=true)
+    @NaturalId
     private String username;
     
     @OneToMany(cascade= CascadeType.ALL)

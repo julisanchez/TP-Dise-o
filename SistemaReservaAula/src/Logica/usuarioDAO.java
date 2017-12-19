@@ -115,6 +115,36 @@ public class usuarioDAO {
         session.close();
         return Bedel;
     }
+
+    static <T extends usuario> T iniciarSesion(String username, String contrasenia) {
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        T user = (T) session.bySimpleNaturalId( usuario.class ).getReference(username);
+        
+        if(user.getPassword().getCodigo().equals(contrasenia)){
+            System.out.println(user.getUsername()+ " ha iniciado sesion");
+            session.close();
+            return (T) user;
+        }
+        System.out.println(user);
+        System.out.println("La contrasenia es incorrecta");
+        session.close();
+        return null;
+    }
+    
+    static String getUserType(usuario user){
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("SELECT type(u) FROM usuario u WHERE u.username=:user");
+        query.setParameter( "user", user.getUsername());
+       
+        Class temp = (Class) query.getSingleResult();
+        String tipo = temp.getSimpleName();
+        
+        session.close();
+        return tipo;
+    }
     
     
 }

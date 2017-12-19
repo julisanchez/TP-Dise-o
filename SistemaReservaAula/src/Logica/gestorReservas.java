@@ -2,8 +2,6 @@ package Logica;
 
 import DTO.condicionDTO;
 import DTO.reservaDTO;
-import Datos.clase;
-import Datos.docente;
 import Datos.en;
 import Datos.periodo;
 import Datos.reserva;
@@ -59,7 +57,6 @@ public class gestorReservas {
     public static List<List<Integer>> buscarDisponibles(List<Integer> idAulas, condicionDTO condicion){
         List<en> reservas = reservasDAO.buscarReservas(idAulas);
         List<List<Integer>> aulasPorDia = new ArrayList<>();
-
         
         for(String dia: condicion.dias){
             aulasPorDia.add(idAulas);
