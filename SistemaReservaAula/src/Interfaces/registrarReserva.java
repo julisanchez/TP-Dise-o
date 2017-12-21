@@ -715,9 +715,6 @@ public class registrarReserva extends javax.swing.JFrame {
                 
                 List<aula[]> aulas = gestorAula.buscarDisponibilidad(condicion);
                 
-                
-                System.out.println("Aula: "+aulas.get(0)[0].idAula);
-                
                 seleccionarAula menuAulas = new seleccionarAula();
                 menuAulas.aulas = aulas;
                 for(int i=0; i<jTable1.getRowCount(); i++){
