@@ -49,7 +49,7 @@ public class reservasDAO {
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
         
-        periodo Periodo = session.byId(periodo.class).getReference(idPeriodo);
+        periodo Periodo = session.get(periodo.class, idPeriodo);
      
         session.close();
         
@@ -73,10 +73,11 @@ public class reservasDAO {
     static void guardar(reserva nuevaReserva) {
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
+        session.clear();
         
         try { 
             session.beginTransaction();
-            session.saveOrUpdate(nuevaReserva);
+            session.save(nuevaReserva);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println(e);

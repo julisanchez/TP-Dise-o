@@ -21,7 +21,7 @@ class claseDAO {
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
         
-        clase Clase = session.byId(clase.class).getReference(idClase);
+        clase Clase = session.get(clase.class, idClase);
      
         session.close();
         

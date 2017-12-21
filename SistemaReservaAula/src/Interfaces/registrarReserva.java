@@ -17,6 +17,7 @@ import Logica.gestorReservas;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -636,8 +637,11 @@ public class registrarReserva extends javax.swing.JFrame {
                 condicion.tipoAula = aula.getTipoAula(tipoAulaCombo.getSelectedItem().toString());
                 
                 //debe incluir el año el numero de periodo? como su id?
+                List<String> horarioSinFormato = new ArrayList<>();
+                List<String> duracionSinFormato = new ArrayList<>();
                 if(tipo.equals("Periodica")){
                     condicion.periodo = periodo.getSelectedIndex();
+                    
                     
                     if(peroBox1.isSelected()){
                         try {
@@ -645,6 +649,8 @@ public class registrarReserva extends javax.swing.JFrame {
                             condicion.dias.add("Lunes");
                             condicion.horarios.add( timeFormat.parse(horariosPero1.getText()));
                             condicion.duracion.add( timeFormat.parse(duracionPero1.getText()));
+                            horarioSinFormato.add(horariosPero1.getText());
+                            duracionSinFormato.add(duracionPero1.getText());
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -654,6 +660,8 @@ public class registrarReserva extends javax.swing.JFrame {
                             condicion.dias.add("Martes");
                             condicion.horarios.add( timeFormat.parse(horariosPero2.getText()));
                             condicion.duracion.add( timeFormat.parse(duracionPero2.getText()));
+                            horarioSinFormato.add(horariosPero2.getText());
+                            duracionSinFormato.add(duracionPero2.getText());
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -663,6 +671,8 @@ public class registrarReserva extends javax.swing.JFrame {
                             condicion.dias.add("Miercoles");
                             condicion.horarios.add( timeFormat.parse(horariosPero3.getText()));
                             condicion.duracion.add( timeFormat.parse(duracionPero3.getText()));
+                            horarioSinFormato.add(horariosPero3.getText());
+                            duracionSinFormato.add(duracionPero3.getText());
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -672,6 +682,8 @@ public class registrarReserva extends javax.swing.JFrame {
                             condicion.dias.add("Jueves");
                             condicion.horarios.add( timeFormat.parse(horariosPero4.getText()));
                             condicion.duracion.add( timeFormat.parse(duracionPero4.getText()));
+                            horarioSinFormato.add(horariosPero4.getText());
+                            duracionSinFormato.add(duracionPero4.getText());
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -681,6 +693,8 @@ public class registrarReserva extends javax.swing.JFrame {
                             condicion.dias.add("Viernes");
                             condicion.horarios.add( timeFormat.parse(horariosPero5.getText()));
                             condicion.duracion.add( timeFormat.parse(duracionPero5.getText()));
+                            horarioSinFormato.add(horariosPero5.getText());
+                            duracionSinFormato.add(duracionPero5.getText());
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -690,6 +704,8 @@ public class registrarReserva extends javax.swing.JFrame {
                             condicion.dias.add("Sabado");
                             condicion.horarios.add( timeFormat.parse(horariosPero6.getText()));
                             condicion.duracion.add( timeFormat.parse(duracionPero6.getText()));
+                            horarioSinFormato.add(horariosPero6.getText());
+                            duracionSinFormato.add(duracionPero6.getText());
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -715,14 +731,25 @@ public class registrarReserva extends javax.swing.JFrame {
                 
                 List<aula[]> aulas = gestorAula.buscarDisponibilidad(condicion);
                 
-                seleccionarAula menuAulas = new seleccionarAula();
+                seleccionarAula menuAulas = new seleccionarAula(); 
                 menuAulas.aulas = aulas;
-                for(int i=0; i<jTable1.getRowCount(); i++){
-                    Object[] fecha = new Object[3];
-                    for(int j=0; j<3; j++){
-                        fecha[j] = jTable1.getModel().getValueAt(i,j);
+                if(this.esporadica.isSelected()){
+                    for(int i=0; i<jTable1.getRowCount(); i++){
+                        Object[] fecha = new Object[3];
+                        for(int j=0; j<3; j++){
+                            fecha[j] = jTable1.getModel().getValueAt(i,j);
+                        }
+                        menuAulas.fechas.add(fecha);
                     }
-                    menuAulas.fechas.add(fecha);
+                }
+                if (this.periodica.isSelected()){
+                    for (int i=0; i<condicion.dias.size(); i++){
+                        Object[] dias = new Object[3];
+                        dias[0] = condicion.dias.get(i);
+                        dias[1] = horarioSinFormato.get(i);
+                        dias[2] = duracionSinFormato.get(i);
+                        menuAulas.fechas.add(dias);
+                    }
                 }
                 menuAulas.cargarTablaFechas();
                 menuAulas.cargarTablaAulas(0);
@@ -730,8 +757,6 @@ public class registrarReserva extends javax.swing.JFrame {
                 
                 
                 this.setVisible(false);
-                
-                List<Integer> aulasSeleccionadas = menuAulas.obtenerAulas();
                 
                 reservaDTO reservaDatos = new reservaDTO();
                 reservaDatos.setTipo(tipo);
@@ -742,11 +767,12 @@ public class registrarReserva extends javax.swing.JFrame {
                 //periodo con anio o sin anio ?
                 reservaDatos.setIdPeriodo(condicion.periodo);
                 //seleccionar las aulas
-                reservaDatos.setIdAulas(aulasSeleccionadas);
+                
                 reservaDatos.setIdClase(clases.get(catedraCombo.getSelectedIndex()).idClase);
                 reservaDatos.setIdDocente(docentes.get(docenteCombo.getSelectedIndex()).idDocente);
                 
-                gestorReservas.registrar(reservaDatos);
+                menuAulas.reserva = reservaDatos;
+                
             }
             
         }

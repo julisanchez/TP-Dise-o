@@ -6,10 +6,12 @@
 package Interfaces;
 
 import DTO.condicionDTO;
+import DTO.reservaDTO;
 import Datos.aula;
 import Datos.informatica;
 import Datos.multimedios;
 import Datos.sinRecursos;
+import Logica.gestorReservas;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -33,8 +35,10 @@ public class seleccionarAula extends javax.swing.JFrame {
     List<Integer> elementosSeleccionado = new ArrayList<>();
     List<Object[]> fechas = new ArrayList<>();
     boolean elementosInicializados = false;
+    public reservaDTO reserva;
     
     class FechasSelectionHandler implements ListSelectionListener {
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 
@@ -44,16 +48,16 @@ public class seleccionarAula extends javax.swing.JFrame {
 
         if (lsm.isSelectionEmpty()) {
 
-        } else {
+        } else if(isAdjusting){
             // Find out which indexes are selected.
             cargarTablaAulas(jTableReservas.getSelectedRow());
             int aulaSeleccionada = elementosSeleccionado.get(jTableReservas.getSelectedRow());
             jTable1.setRowSelectionInterval(aulaSeleccionada, aulaSeleccionada);
-            System.out.println("Aula Seleccionada: "+aulaSeleccionada);
         }
     }
     }
     class AulasSelectionHandler implements ListSelectionListener {
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 
@@ -63,7 +67,7 @@ public class seleccionarAula extends javax.swing.JFrame {
 
         if (lsm.isSelectionEmpty()) {
 
-        } else {
+        } else if(isAdjusting){
             // Find out which indexes are selected.
             if(elementosInicializados){
                 guardarAulaSeleccionada();
@@ -87,7 +91,7 @@ public class seleccionarAula extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         
-        elementosSeleccionado.add(0);
+        //elementosSeleccionado.add(0);
         ListSelectionModel fechasSelectionModel = jTableReservas.getSelectionModel();
         fechasSelectionModel.addListSelectionListener(new FechasSelectionHandler());
         ListSelectionModel aulasSelectionModel = jTable1.getSelectionModel();
@@ -232,6 +236,13 @@ public class seleccionarAula extends javax.swing.JFrame {
 
     private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
         System.out.println(aulasSeleccionadas.toString());
+        List<Integer> listaId = new ArrayList<>();
+        
+        for(aula Aula:aulasSeleccionadas){
+            listaId.add(Aula.idAula);
+        }
+        reserva.setIdAulas(listaId);
+        gestorReservas.registrar(reserva);
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void cancelarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarButtonMouseClicked
@@ -370,7 +381,8 @@ public class seleccionarAula extends javax.swing.JFrame {
         }
         
         jTable1.setModel(modelo);
-        jTable1.setRowSelectionInterval(elementosSeleccionado.get(jTableReservas.getSelectedRow()), jTableReservas.getSelectedRow());
+        int seleccionado = elementosSeleccionado.get(jTableReservas.getSelectedRow());
+        jTable1.setRowSelectionInterval(seleccionado, seleccionado);
     }
     
 }
