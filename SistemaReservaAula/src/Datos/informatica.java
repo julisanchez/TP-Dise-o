@@ -16,9 +16,9 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 public class informatica extends aula implements Serializable {
-    private int cantidadPc;
+    public int cantidadPc;
     @Type(type="boolean")
-    private Boolean proyector;
+    public Boolean proyector;
 
     public informatica() {
     }

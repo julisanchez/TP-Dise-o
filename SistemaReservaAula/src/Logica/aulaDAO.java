@@ -54,7 +54,7 @@ public class aulaDAO {
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
         
-        aula Aula = session.byId(aula.class).getReference(aulaId);
+        aula Aula = session.get(aula.class, aulaId);
      
         session.close();
         

@@ -7,8 +7,11 @@ package Interfaces;
 
 import DTO.condicionDTO;
 import Datos.aula;
+import Datos.informatica;
+import Datos.multimedios;
 import Datos.sinRecursos;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,18 +24,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class seleccionarAula extends javax.swing.JFrame {
 
-    static public List<aula[]> aulas;
+    public List<aula[]> aulas;
     List<aula> aulasSeleccionadas = new ArrayList<>();
-    static List<Object[]> fechas = new ArrayList<>(); 
+    List<Object[]> fechas = new ArrayList<>(); 
     /**
      * Creates new form menuBedel
      */
     public seleccionarAula() {
         initComponents();
         this.setLocationRelativeTo(null); 
-        cargarTablaFechas();
-        jTableReservas.setRowSelectionInterval(0, 0);
-        cargarTablaAulas(0);
     }
 
     /**
@@ -103,7 +103,7 @@ public class seleccionarAula extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false
@@ -162,6 +162,11 @@ public class seleccionarAula extends javax.swing.JFrame {
         getContentPane().add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, -1, 30));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/simple-blue-ii.jpg"))); // NOI18N
+        fondo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fondoKeyTyped(evt);
+            }
+        });
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500));
 
         pack();
@@ -187,6 +192,17 @@ public class seleccionarAula extends javax.swing.JFrame {
         // TODO add your handling code here:
         cargarTablaAulas(jTableReservas.getSelectedRow());
     }//GEN-LAST:event_jTableReservasPropertyChange
+
+    private void fondoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fondoKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyCode();
+        int selectedRow;
+        if (key == KeyEvent.VK_ENTER){
+            selectedRow = jTableReservas.getSelectedRow();
+            selectedRow++;
+            jTableReservas.setRowSelectionInterval(selectedRow, selectedRow);
+        }
+    }//GEN-LAST:event_fondoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -217,8 +233,6 @@ public class seleccionarAula extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
-        System.out.println(fechas.toString());
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -249,39 +263,59 @@ public class seleccionarAula extends javax.swing.JFrame {
         return idAulas;
     }
     
-    void cargarTablaFechas(){
+    public void cargarTablaFechas(){
         DefaultTableModel modelo = (DefaultTableModel) jTableReservas.getModel();
         
         for(Object[] fecha:fechas){
             modelo.addRow(fecha);
-            System.out.println(fecha[0].toString());
         }
         jTableReservas.setModel(modelo);
+        jTableReservas.setRowSelectionInterval(0, 0);
     }
     
-    void cargarTablaAulas(int filaSeleccionada){
+    public void cargarTablaAulas(int filaSeleccionada){
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         Object[] aulaRow = new Object[10];
         
+        for(int i=0; i<modelo.getRowCount(); i++){
+            modelo.removeRow(i);
+        }
+       
+        aula[] aulasPorDia = aulas.get(filaSeleccionada);
         if(filaSeleccionada >= 0)
-        for(aula Aula: aulas.get(filaSeleccionada)){
+        for(aula Aula: aulasPorDia){
             aulaRow[0] = Aula.num;
-            System.out.println(Aula.num);
             aulaRow[1] = Aula.piso;
             aulaRow[2] = Aula.capacidad;
             aulaRow[3] = Aula.pizarron;
             aulaRow[4] = Aula.ac;
             
             sinRecursos aulaSinRecursos;
+            informatica aulaInformatica;
+            multimedios aulaMultimedios;
+            
             if(Aula instanceof sinRecursos){
                 aulaSinRecursos = (sinRecursos) Aula;
                 aulaRow[5] = aulaSinRecursos.ventiladores;
+            }
+            else if(Aula instanceof informatica){
+                aulaInformatica = (informatica) Aula;
+                aulaRow[6] = aulaInformatica.cantidadPc;
+                aulaRow[7] = aulaInformatica.proyector;
+            }
+            else if(Aula instanceof multimedios){
+                aulaMultimedios = (multimedios) Aula;
+                aulaRow[6] = aulaMultimedios.pc;
+                aulaRow[7] = aulaMultimedios.proyector;
+                aulaRow[8] = aulaMultimedios.televisor;
+                aulaRow[9] = aulaMultimedios.dvd;
             }
             
             modelo.addRow(aulaRow);
         }
         
         jTable1.setModel(modelo);
+        jTable1.setRowSelectionInterval(0, 0);
     }
     
 }

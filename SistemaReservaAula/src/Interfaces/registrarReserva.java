@@ -715,17 +715,20 @@ public class registrarReserva extends javax.swing.JFrame {
                 
                 List<aula[]> aulas = gestorAula.buscarDisponibilidad(condicion);
                 
+                
+                System.out.println("Aula: "+aulas.get(0)[0].idAula);
+                
+                seleccionarAula menuAulas = new seleccionarAula();
+                menuAulas.aulas = aulas;
                 for(int i=0; i<jTable1.getRowCount(); i++){
                     Object[] fecha = new Object[3];
                     for(int j=0; j<3; j++){
                         fecha[j] = jTable1.getModel().getValueAt(i,j);
                     }
-                    seleccionarAula.fechas.add(fecha);
+                    menuAulas.fechas.add(fecha);
                 }
-                System.out.println(aulas.toString());
-                
-                seleccionarAula.aulas = aulas;
-                seleccionarAula menuAulas = new seleccionarAula();
+                menuAulas.cargarTablaFechas();
+                menuAulas.cargarTablaAulas(0);
                 menuAulas.setVisible(true);
                 
                 

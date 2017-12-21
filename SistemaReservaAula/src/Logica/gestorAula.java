@@ -25,6 +25,7 @@ public class gestorAula {
         List<Integer> idAulas = aulaDAO.buscarAula(condicion);
         List<List<Integer>> aulasDisponibles = gestorReservas.buscarDisponibles(idAulas, condicion);
         for(List<Integer> aulasPorDia : aulasDisponibles){
+            System.out.println(aulasPorDia.toString());
             aulas = selecciona3(aulasPorDia);
             resultado.add(aulas);
         }
@@ -49,6 +50,7 @@ public class gestorAula {
         
         for(Integer idAula:aulasDisponibles){
             aulasTemp.add(aulaDAO.getAula(idAula));
+            System.out.println(aulaDAO.getAula(idAula).idAula);
         }
         
         aulasTemp.sort(new CapacidadComparator());

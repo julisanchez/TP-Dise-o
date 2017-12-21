@@ -17,13 +17,13 @@ import org.hibernate.annotations.Type;
 @Entity
 public class multimedios extends aula implements Serializable {
     @Type(type="boolean")
-    private Boolean televisor;
+    public Boolean televisor;
     @Type(type="boolean")
-    private Boolean proyector;
+    public Boolean proyector;
     @Type(type="boolean")
-    private Boolean pc;
+    public Boolean pc;
     @Type(type="boolean")
-    private Boolean dvd;
+    public Boolean dvd;
 
     public multimedios() {
     }

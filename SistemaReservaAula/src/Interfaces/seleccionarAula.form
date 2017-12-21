@@ -132,7 +132,7 @@
                 <Column editable="false" title="Pizarron" type="java.lang.Object"/>
                 <Column editable="false" title="A/C" type="java.lang.Boolean"/>
                 <Column editable="false" title="Ventiladores" type="java.lang.Boolean"/>
-                <Column editable="false" title="PC" type="java.lang.Boolean"/>
+                <Column editable="false" title="PC" type="java.lang.Object"/>
                 <Column editable="false" title="Proyector" type="java.lang.Boolean"/>
                 <Column editable="false" title="TV" type="java.lang.Boolean"/>
                 <Column editable="false" title="DVD" type="java.lang.Boolean"/>
@@ -264,6 +264,9 @@
           <Image iconType="3" name="/imagenes/simple-blue-ii.jpg"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fondoKeyTyped"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="0" y="0" width="500" height="500"/>
