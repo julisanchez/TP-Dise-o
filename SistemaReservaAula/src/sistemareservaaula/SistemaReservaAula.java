@@ -8,6 +8,7 @@ package sistemareservaaula;
 import Interfaces.menuAdmin;
 import Interfaces.menuCarga;
 import Interfaces.menuInicio;
+import Interfaces.registrarReserva;
 import Logica.conexion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public class SistemaReservaAula {
         obj.dispose();
       
         //new menuInicio().setVisible(true);
-        new menuAdmin().setVisible(true);
+        new registrarReserva().setVisible(true);
         
     }
     

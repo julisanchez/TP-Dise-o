@@ -27,13 +27,18 @@ public class aulaDAO {
         Session session = sessionFactory.openSession();
         Query query;
         
-        query = session.createQuery("a.idAula FROM :entity a WHERE a.estado=true AND a.capacidad>=:capacidad");
+        //query = session.createSQLQuery("SELECT * FROM aula a WHERE a.estado=true AND a.capacidad>=:capacidad AND a.DTYPE=:tipo");
+        query = session.createQuery("FROM "+ condicion.tipoAula +" a WHERE a.estado=true AND a.capacidad>=:capacidad");
         
-        query.setParameter("entity", condicion.tipoAula);
         query.setParameter("capacidad", condicion.cant_alumnos);
+        //query.setParameter("tipo", condicion.tipoAula);
         
         try {
-            lista = query.getResultList();
+            List<aula> temp = query.getResultList();
+            
+            for(aula s : temp){
+                lista.add(s.idAula);
+            }
 
         }catch (NoResultException nre) {
 
@@ -45,7 +50,14 @@ public class aulaDAO {
         return lista;
     }
 
-    static aula getAula(Integer get) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    static aula getAula(Integer aulaId) {
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        aula Aula = session.byId(aula.class).getReference(aulaId);
+     
+        session.close();
+        
+        return Aula;
     }
 }

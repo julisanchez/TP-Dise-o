@@ -6,7 +6,9 @@
 package DTO;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,10 +24,10 @@ public class condicionDTO {
     Esporadica
     */
     public String tipoAula;
-    public List<Calendar> fechas;
-    public List<String> dias;
-    public List<Time> horarios;
-    public List<Time> duracion;
+    public List<Calendar> fechas = new ArrayList<>();
+    public List<String> dias = new ArrayList<>();
+    public List<Date> horarios = new ArrayList<>();
+    public List<Date> duracion = new ArrayList<>();
     public int periodo;
     /*
     Valores variable periodo

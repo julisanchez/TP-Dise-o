@@ -6,6 +6,10 @@
 package Logica;
 
 import Datos.clase;
+import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -14,7 +18,24 @@ import Datos.clase;
 class claseDAO {
 
     static clase getClase(int idClase) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        clase Clase = session.byId(clase.class).getReference(idClase);
+     
+        session.close();
+        
+        return Clase;
+    }
+
+    static List<clase> getClases() {
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("FROM clase");
+       
+        List<clase> clases = query.getResultList();
+        session.close();
+        return clases;
     }
     
 }

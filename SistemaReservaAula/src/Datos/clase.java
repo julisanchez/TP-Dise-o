@@ -24,8 +24,8 @@ import org.hibernate.annotations.IndexColumn;
 @Table
 public class clase implements Serializable {
     @Id
-    private int idClase;
-    private String nombre;
+    public int idClase;
+    public String nombre;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="clase")
     @OrderColumn

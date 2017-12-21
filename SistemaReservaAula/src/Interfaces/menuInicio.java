@@ -7,8 +7,13 @@ package Interfaces;
 
 import Datos.admin;
 import Datos.bedel;
+import Datos.password;
 import Datos.usuario;
 import Logica.gestorUsuario;
+import Logica.usuarioDAO;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.SessionFactory;
@@ -125,21 +130,20 @@ public class menuInicio extends javax.swing.JFrame {
         
         if(!jTextField1.getText().isEmpty() && jPasswordField1.getPassword()!=null){
             usuario userLogeado = gestorUsuario.iniciarSesion(jTextField1.getText(), new String(jPasswordField1.getPassword())); 
-            String tipo = gestorUsuario.getUserType(userLogeado);
-            
-            System.out.println("Se logeo un usuario del tipo "+ userLogeado);
-            
+            String tipo = gestorUsuario.getUserType(userLogeado); 
             
             if(tipo.equals("admin")){
                 menuAdmin menu = new menuAdmin();
                 menu.setVisible(true);
+                menu.userLogeado = userLogeado;
                 this.dispose();
                 
             }
             else if(tipo.equals("bedel")){
                 menuBedel menu = new menuBedel();
                 menu.setVisible(true);
-                menu.bedelOnline = (bedel) userLogeado;
+                menu.bedelOnline = userLogeado;
+                menu.nombreUsuario.setText(userLogeado.getUsername());
                 this.dispose();
             }
         }

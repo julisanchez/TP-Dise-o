@@ -5,18 +5,34 @@
  */
 package Interfaces;
 
+import DTO.condicionDTO;
+import Datos.aula;
+import Datos.sinRecursos;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Alexis Mandracchia
  */
 public class seleccionarAula extends javax.swing.JFrame {
 
+    static public List<aula[]> aulas;
+    List<aula> aulasSeleccionadas = new ArrayList<>();
+    static List<Object[]> fechas = new ArrayList<>(); 
     /**
      * Creates new form menuBedel
      */
     public seleccionarAula() {
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); 
+        cargarTablaFechas();
+        jTableReservas.setRowSelectionInterval(0, 0);
+        cargarTablaAulas(0);
     }
 
     /**
@@ -52,33 +68,60 @@ public class seleccionarAula extends javax.swing.JFrame {
 
         jTableReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Fecha", "Hora", "Duracion"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableReservas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableReservas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTableReservasPropertyChange(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableReservas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 230, 300));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 480, 190));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "N° Aula", "Id Aula"
+                "N° Aula", "Piso", "Capacidad", "Pizarron", "A/C", "Ventiladores", "PC", "Proyector", "TV", "DVD"
             }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 230, 300));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 480, 90));
 
         aceptarButton.setBackground(new java.awt.Color(0, 204, 0));
         aceptarButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -129,7 +172,7 @@ public class seleccionarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_aceptarButtonMouseClicked
 
     private void aceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarButtonActionPerformed
-        
+
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void cancelarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarButtonMouseClicked
@@ -137,8 +180,13 @@ public class seleccionarAula extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarButtonMouseClicked
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void jTableReservasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTableReservasPropertyChange
+        // TODO add your handling code here:
+        cargarTablaAulas(jTableReservas.getSelectedRow());
+    }//GEN-LAST:event_jTableReservasPropertyChange
 
     /**
      * @param args the command line arguments
@@ -169,6 +217,8 @@ public class seleccionarAula extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+        System.out.println(fechas.toString());
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -186,7 +236,52 @@ public class seleccionarAula extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTableReservas;
+    private static javax.swing.JTable jTableReservas;
     private javax.swing.JLabel logoUTN;
     // End of variables declaration//GEN-END:variables
+
+    List<Integer> obtenerAulas() {
+        List<Integer> idAulas = new ArrayList<>();
+        for(aula Aula:aulasSeleccionadas){
+            idAulas.add(Aula.idAula);
+        }
+        
+        return idAulas;
+    }
+    
+    void cargarTablaFechas(){
+        DefaultTableModel modelo = (DefaultTableModel) jTableReservas.getModel();
+        
+        for(Object[] fecha:fechas){
+            modelo.addRow(fecha);
+            System.out.println(fecha[0].toString());
+        }
+        jTableReservas.setModel(modelo);
+    }
+    
+    void cargarTablaAulas(int filaSeleccionada){
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        Object[] aulaRow = new Object[10];
+        
+        if(filaSeleccionada >= 0)
+        for(aula Aula: aulas.get(filaSeleccionada)){
+            aulaRow[0] = Aula.num;
+            System.out.println(Aula.num);
+            aulaRow[1] = Aula.piso;
+            aulaRow[2] = Aula.capacidad;
+            aulaRow[3] = Aula.pizarron;
+            aulaRow[4] = Aula.ac;
+            
+            sinRecursos aulaSinRecursos;
+            if(Aula instanceof sinRecursos){
+                aulaSinRecursos = (sinRecursos) Aula;
+                aulaRow[5] = aulaSinRecursos.ventiladores;
+            }
+            
+            modelo.addRow(aulaRow);
+        }
+        
+        jTable1.setModel(modelo);
+    }
+    
 }

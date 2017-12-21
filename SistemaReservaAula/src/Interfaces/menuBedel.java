@@ -6,6 +6,7 @@
 package Interfaces;
 
 import Datos.bedel;
+import Datos.usuario;
 
 /**
  *
@@ -16,7 +17,7 @@ public class menuBedel extends javax.swing.JFrame {
     /**
      * Creates new form menuBedel
      */
-    public static bedel bedelOnline;
+    public static usuario bedelOnline;
     
     public menuBedel() {
         initComponents();
@@ -53,8 +54,9 @@ public class menuBedel extends javax.swing.JFrame {
 
         nombreUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         nombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        nombreUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         nombreUsuario.setText("nombreUsuario");
-        getContentPane().add(nombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+        getContentPane().add(nombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
         cerrarSesion.setBackground(new java.awt.Color(51, 51, 255));
         cerrarSesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -63,7 +65,12 @@ public class menuBedel extends javax.swing.JFrame {
         cerrarSesion.setBorderPainted(false);
         cerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cerrarSesion.setOpaque(true);
-        getContentPane().add(cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 110, 30));
+        cerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 120, 30));
 
         irReserva.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         irReserva.setText("NUEVA RESERVA");
@@ -109,8 +116,14 @@ public class menuBedel extends javax.swing.JFrame {
 
     private void irReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irReservaActionPerformed
         // TODO add your handling code here:
-        registrarReserva menuRegitrar = new registrarReserva();
+        registrarReserva menuRegistrar = new registrarReserva();
+        menuRegistrar.setVisible(true);
     }//GEN-LAST:event_irReservaActionPerformed
+
+    private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_cerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,10 +152,12 @@ public class menuBedel extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new menuBedel().setVisible(true);
+                new menuBedel().setVisible(true);     
             }
         });
     }
@@ -156,6 +171,6 @@ public class menuBedel extends javax.swing.JFrame {
     private javax.swing.JButton irReservasDia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel logoUTN;
-    private javax.swing.JLabel nombreUsuario;
+    public static javax.swing.JLabel nombreUsuario;
     // End of variables declaration//GEN-END:variables
 }

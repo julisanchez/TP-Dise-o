@@ -24,10 +24,10 @@ import org.hibernate.annotations.IndexColumn;
 @Table
 public class docente implements Serializable {
     @Id
-    private int idDocente;
-    private String nombre;
-    private String apellido;
-    private String email;
+    public int idDocente;
+    public String nombre;
+    public String apellido;
+    public String email;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="docente")
     @OrderColumn

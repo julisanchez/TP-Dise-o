@@ -2,6 +2,7 @@ package Logica;
 
 import DTO.condicionDTO;
 import DTO.reservaDTO;
+import Datos.bedel;
 import Datos.en;
 import Datos.periodo;
 import Datos.reserva;
@@ -23,7 +24,7 @@ public class gestorReservas {
         nuevaReserva.cantidadAlumnos = reserva.getCant_alumnos();
         nuevaReserva.clase = claseDAO.getClase(reserva.getIdClase());
         nuevaReserva.docente = docenteDAO.getDocente(reserva.getIdDocente());
-        nuevaReserva.bedel = menuBedel.bedelOnline;
+        nuevaReserva.bedel = (bedel) menuBedel.bedelOnline;
         
         periodo periodoReserva = new periodo();
         
@@ -38,7 +39,7 @@ public class gestorReservas {
             reservaEn.horario = reserva.getHorarios().get(i);
             reservaEn.duracion = reserva.getDuracion().get(i);
             reservaEn.fecha = reserva.getFechas().get(i);
-            reservaEn.idAula = aulaDAO.getAula(reserva.getIdAulas().get(i));
+            //reservaEn.idAula = aulaDAO.getAula(reserva.getIdAulas().get(i));
             
             if(reserva.getTipo().equals("Periodica")){
                 reservaEn.idPeriodo = periodoReserva;
@@ -148,5 +149,40 @@ public class gestorReservas {
         horarioFinReserva.add(Calendar.HOUR_OF_DAY, reserva.duracion.getHours());
         
         return !(horarioInicioReserva.after(horarioFin) || horarioFinReserva.before(horarioInicio));
+    }
+    
+    public static List<String> getDiasSemanas(List<Calendar> fechas){
+        List<String> diasSemanas = new ArrayList<>();
+        String dia = "";
+        
+        for(Calendar fecha:fechas){
+            switch (fecha.get(Calendar.DAY_OF_WEEK)){
+                case 1:
+                    dia = "Domingo";
+                    break;
+                case 2: 
+                    dia = "Lunes";
+                    break;
+                case 3:
+                    dia = "Martes";
+                    break;
+                case 4:
+                    dia = "Miercoles";
+                    break;
+                case 5:
+                    dia = "Jueves";
+                    break;
+                case 6:
+                    dia = "Viernes";
+                    break;
+                case 7:
+                    dia = "Sabado";
+                    break;
+            }
+            
+            diasSemanas.add(dia);
+        }
+        
+        return diasSemanas;
     }
 }

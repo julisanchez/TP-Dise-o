@@ -5,6 +5,7 @@
  */
 package DTO;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class reservaDTO {
     private String tipo;
     private int cant_alumnos;
+    // Lunes, martes, miercoles, etc
     private List<String> fechas;
     private List<Calendar> horarios;
     private List<Date> duracion;
@@ -109,7 +111,6 @@ public class reservaDTO {
 
     public void setIdClase(int idClase) {
         this.idClase = idClase;
-    }
-    
+    }    
     
 }

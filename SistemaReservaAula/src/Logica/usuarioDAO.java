@@ -6,6 +6,7 @@
 package Logica;
 
 import DTO.bedelDTO;
+import Datos.admin;
 import Datos.bedel;
 import Datos.password;
 import Datos.usuario;
@@ -52,6 +53,22 @@ public class usuarioDAO {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             session.saveOrUpdate(Bedel);
+           // session.save(Password);
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            System.out.println(e);
+            return false;
+        }
+       return true; 
+    }
+    
+    public static boolean guardar(admin Admin){
+        try {
+            SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.saveOrUpdate(Admin);
            // session.save(Password);
             session.getTransaction().commit();
             session.close();
@@ -116,19 +133,17 @@ public class usuarioDAO {
         return Bedel;
     }
 
-    static <T extends usuario> T iniciarSesion(String username, String contrasenia) {
+    static usuario iniciarSesion(String username, String contrasenia) {
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
         
-        T user = (T) session.bySimpleNaturalId( usuario.class ).getReference(username);
+        usuario user = session.bySimpleNaturalId( usuario.class ).getReference(username);
         
         if(user.getPassword().getCodigo().equals(contrasenia)){
-            System.out.println(user.getUsername()+ " ha iniciado sesion");
             session.close();
-            return (T) user;
+            return  user;
         }
-        System.out.println(user);
-        System.out.println("La contrasenia es incorrecta");
+        
         session.close();
         return null;
     }

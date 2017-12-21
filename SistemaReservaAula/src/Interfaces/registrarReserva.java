@@ -8,15 +8,17 @@ package Interfaces;
 import DTO.condicionDTO;
 import DTO.reservaDTO;
 import Datos.aula;
+import Datos.clase;
+import Datos.docente;
 import Logica.gestorAula;
+import Logica.gestorClase;
+import Logica.gestorDocente;
 import Logica.gestorReservas;
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +33,8 @@ import javax.swing.table.DefaultTableModel;
 public class registrarReserva extends javax.swing.JFrame {
 
     private String sfecha;
+    private List<docente> docentes;
+    private List<clase> clases;
     
 
     /**
@@ -75,6 +79,17 @@ public class registrarReserva extends javax.swing.JFrame {
         this.perodi7.setVisible(false);
         this.periodo.setVisible(false);
         
+        docentes = gestorDocente.obtenerDocentes();
+        
+        for(docente doc: docentes){
+           this.docenteCombo.addItem(doc.apellido + ", " + doc.nombre);
+        }
+        
+        clases = gestorClase.getClases();
+        
+        for(clase Clase : clases){
+           this.catedraCombo.addItem(Clase.nombre);
+        }
         
         
     }
@@ -286,7 +301,11 @@ public class registrarReserva extends javax.swing.JFrame {
         cant_alumnos3.setText("Apellido y Nombre del docente:");
         getContentPane().add(cant_alumnos3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, 30));
 
-        docenteCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        docenteCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                docenteComboItemStateChanged(evt);
+            }
+        });
         getContentPane().add(docenteCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 150, 30));
 
         jTextField1.setEditable(false);
@@ -297,7 +316,6 @@ public class registrarReserva extends javax.swing.JFrame {
         cant_alumnos4.setText("Email del docente:");
         getContentPane().add(cant_alumnos4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, -1, 30));
 
-        catedraCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(catedraCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 450, 150, -1));
 
         aceptarButton.setBackground(new java.awt.Color(0, 204, 0));
@@ -604,7 +622,7 @@ public class registrarReserva extends javax.swing.JFrame {
         if(aux){
             //CAMPO TEXTO CANTIDAD DE ALUMNOS NO VACIO
             String cantAlumnos = this.cantAlumnosText.getText();
-            if(cantAlumnos.equals(cantAlumnos)){
+            if(cantAlumnos.isEmpty()){
                 
             }else{
                 //TODO OK!!! IR AL CASO DE USO 5
@@ -615,7 +633,7 @@ public class registrarReserva extends javax.swing.JFrame {
                 condicion.cant_alumnos = Integer.parseInt(cantAlumnos);
                 condicion.tipo = tipo;
                 //cambiar texto tipo aula
-                condicion.tipoAula = tipoAulaCombo.getSelectedItem().toString();
+                condicion.tipoAula = aula.getTipoAula(tipoAulaCombo.getSelectedItem().toString());
                 
                 //debe incluir el año el numero de periodo? como su id?
                 if(tipo.equals("Periodica")){
@@ -625,8 +643,8 @@ public class registrarReserva extends javax.swing.JFrame {
                         try {
                             // necesita condicion.fechas?
                             condicion.dias.add("Lunes");
-                            condicion.horarios.add((Time) timeFormat.parse(horariosPero1.getText()));
-                            condicion.duracion.add((Time) timeFormat.parse(duracionPero1.getText()));
+                            condicion.horarios.add( timeFormat.parse(horariosPero1.getText()));
+                            condicion.duracion.add( timeFormat.parse(duracionPero1.getText()));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -634,8 +652,8 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox2.isSelected()){
                         try {
                             condicion.dias.add("Martes");
-                            condicion.horarios.add((Time) timeFormat.parse(horariosPero2.getText()));
-                            condicion.duracion.add((Time) timeFormat.parse(duracionPero2.getText()));
+                            condicion.horarios.add( timeFormat.parse(horariosPero2.getText()));
+                            condicion.duracion.add( timeFormat.parse(duracionPero2.getText()));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -643,8 +661,8 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox3.isSelected()){
                         try {
                             condicion.dias.add("Miercoles");
-                            condicion.horarios.add((Time) timeFormat.parse(horariosPero3.getText()));
-                            condicion.duracion.add((Time) timeFormat.parse(duracionPero3.getText()));
+                            condicion.horarios.add( timeFormat.parse(horariosPero3.getText()));
+                            condicion.duracion.add( timeFormat.parse(duracionPero3.getText()));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -652,8 +670,8 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox4.isSelected()){
                         try {
                             condicion.dias.add("Jueves");
-                            condicion.horarios.add((Time) timeFormat.parse(horariosPero4.getText()));
-                            condicion.duracion.add((Time) timeFormat.parse(duracionPero4.getText()));
+                            condicion.horarios.add( timeFormat.parse(horariosPero4.getText()));
+                            condicion.duracion.add( timeFormat.parse(duracionPero4.getText()));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -661,8 +679,8 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox5.isSelected()){
                         try {
                             condicion.dias.add("Viernes");
-                            condicion.horarios.add((Time) timeFormat.parse(horariosPero5.getText()));
-                            condicion.duracion.add((Time) timeFormat.parse(duracionPero5.getText()));
+                            condicion.horarios.add( timeFormat.parse(horariosPero5.getText()));
+                            condicion.duracion.add( timeFormat.parse(duracionPero5.getText()));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -670,8 +688,8 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox6.isSelected()){
                         try {
                             condicion.dias.add("Sabado");
-                            condicion.horarios.add((Time) timeFormat.parse(horariosPero6.getText()));
-                            condicion.duracion.add((Time) timeFormat.parse(duracionPero6.getText()));
+                            condicion.horarios.add( timeFormat.parse(horariosPero6.getText()));
+                            condicion.duracion.add( timeFormat.parse(duracionPero6.getText()));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -681,21 +699,54 @@ public class registrarReserva extends javax.swing.JFrame {
                     for(int i=0; i<jTable1.getRowCount(); i++){
                         Calendar fecha = Calendar.getInstance();
                         try {
-                            fecha.setTime(dateFormat.parse((String) jTable1.getValueAt(i, 0)));
+                            Date fechaTemp = dateFormat.parse((String) jTable1.getValueAt(i, 0));
+                            fecha.setTime(fechaTemp);
                             condicion.fechas.add(fecha);
-                            condicion.horarios.add((Time) timeFormat.parse((String) jTable1.getValueAt(i, 1)));
-                            condicion.duracion.add((Time) timeFormat.parse((String) jTable1.getValueAt(i, 2)));
+                            condicion.horarios.add( timeFormat.parse((String) jTable1.getValueAt(i, 1)));
+                            condicion.duracion.add( timeFormat.parse((String) jTable1.getValueAt(i, 2)));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } 
+                    
+                    condicion.dias = gestorReservas.getDiasSemanas(condicion.fechas);
                 }
                 
-                aula[] aulas = gestorAula.buscarDisponibilidad(condicion)
                 
-                reservaDTO reserva = new reservaDTO();
-                reserva.setTipo(tipo);
-                reserva.setCant_alumnos(Integer.parseInt(cantAlumnos));
+                List<aula[]> aulas = gestorAula.buscarDisponibilidad(condicion);
+                
+                for(int i=0; i<jTable1.getRowCount(); i++){
+                    Object[] fecha = new Object[3];
+                    for(int j=0; j<3; j++){
+                        fecha[j] = jTable1.getModel().getValueAt(i,j);
+                    }
+                    seleccionarAula.fechas.add(fecha);
+                }
+                System.out.println(aulas.toString());
+                
+                seleccionarAula.aulas = aulas;
+                seleccionarAula menuAulas = new seleccionarAula();
+                menuAulas.setVisible(true);
+                
+                
+                this.setVisible(false);
+                
+                List<Integer> aulasSeleccionadas = menuAulas.obtenerAulas();
+                
+                reservaDTO reservaDatos = new reservaDTO();
+                reservaDatos.setTipo(tipo);
+                reservaDatos.setCant_alumnos(Integer.parseInt(cantAlumnos));
+                reservaDatos.setDuracion(condicion.duracion);
+                reservaDatos.setFechas(condicion.dias);
+                reservaDatos.setHorarios(condicion.fechas);
+                //periodo con anio o sin anio ?
+                reservaDatos.setIdPeriodo(condicion.periodo);
+                //seleccionar las aulas
+                reservaDatos.setIdAulas(aulasSeleccionadas);
+                reservaDatos.setIdClase(clases.get(catedraCombo.getSelectedIndex()).idClase);
+                reservaDatos.setIdDocente(docentes.get(docenteCombo.getSelectedIndex()).idDocente);
+                
+                gestorReservas.registrar(reservaDatos);
             }
             
         }
@@ -760,8 +811,7 @@ public class registrarReserva extends javax.swing.JFrame {
         return aux;
     }
     private void cancelarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarButtonMouseClicked
-        menuAdmin obj = new menuAdmin();
-        obj.setVisible(true);
+
         this.dispose();
     }//GEN-LAST:event_cancelarButtonMouseClicked
 
@@ -859,13 +909,11 @@ public class registrarReserva extends javax.swing.JFrame {
         String hora = this.horariosEspo.getText();
         String duracion = this.duracionEspo.getText();
         Date fhoy = new Date();
+        Date fres = this.fechaCombo.getDate();
         
         this.errorFecha.setVisible(false);
         this.errorDuracion.setVisible(false);
         this.errorHorario.setVisible(false);
-        
-        int fechaHoy = fhoy.getDate();
-        int fechaRes = fecha.getDate();
         
         boolean aux =false;
         
@@ -875,7 +923,7 @@ public class registrarReserva extends javax.swing.JFrame {
             aux=true;
         }
         
-        if(fechaRes < fechaHoy){ //evaluar si es fecha es anterior a la actual
+        if(fhoy.after(fres)){ //evaluar si es fecha es anterior a la actual
             JOptionPane.showMessageDialog(null,"Fecha erronea","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
             this.errorFecha.setVisible(true);
             aux=true;
@@ -952,6 +1000,12 @@ public class registrarReserva extends javax.swing.JFrame {
     private void peroBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peroBox6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_peroBox6ActionPerformed
+
+    private void docenteComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_docenteComboItemStateChanged
+        // TODO add your handling code here:
+        jTextField1.setText(docentes.get(docenteCombo.getSelectedIndex()).email);
+        
+    }//GEN-LAST:event_docenteComboItemStateChanged
     private static boolean validarHorario(String hora){
            int horas=0;
            int minutos=0;

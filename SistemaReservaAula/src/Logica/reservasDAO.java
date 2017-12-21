@@ -11,6 +11,7 @@ import Datos.reserva;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -45,15 +46,43 @@ public class reservasDAO {
     }
 
     static periodo getPeriodo(int idPeriodo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        periodo Periodo = session.byId(periodo.class).getReference(idPeriodo);
+     
+        session.close();
+        
+        return Periodo;
     }
     
     //Busca el periodo cuatrimestral al que pertence la fecha
     static periodo getPeriodo(Calendar fecha) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("FROM periodo p WHERE p.inicio >= :fecha AND p.fin <= :fecha");
+        query.setParameter("fecha", fecha);
+        
+        periodo Periodo = (periodo) session.byId(periodo.class).getReference(query.getFirstResult());
+     
+        session.close();
+        
+        return Periodo;
     }
 
     static void guardar(reserva nuevaReserva) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        
+        try { 
+            session.beginTransaction();
+            session.saveOrUpdate(nuevaReserva);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e);
+        }
+        finally{
+            session.close();
+        }
     }
 }

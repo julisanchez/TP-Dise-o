@@ -5,6 +5,8 @@
  */
 package Interfaces;
 
+import Datos.usuario;
+
 /**
  *
  * @author Alexis Mandracchia
@@ -14,6 +16,9 @@ public class menuAdmin extends javax.swing.JFrame {
     /**
      * Creates new form menuBedel
      */
+    
+    public static usuario userLogeado;
+    
     public menuAdmin() {
         initComponents();
         this.setLocationRelativeTo(null);

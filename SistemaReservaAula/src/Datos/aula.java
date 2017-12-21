@@ -24,21 +24,40 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table
 public class aula implements Serializable {
+
     @Id
     public int idAula;
-    private int num;
-    private int piso;
-    private int capacidad;
+    public int num;
+    public int piso;
+    public int capacidad;
     @Type(type="boolean")
-    private Boolean estado;
+    public Boolean estado;
     @Type(type="boolean")
-    private Boolean ac;
-    private int pizarron;
+    public Boolean ac;
+    public int pizarron;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="idAula")
     @OrderColumn
     private List<en> ens;
 
     public aula() {
+    }
+    
+    public static String getTipoAula(String StringAula) {
+        String tipo = "";
+        
+        switch (StringAula){
+            case "Sin recursos adicionales":
+                tipo = "sinRecursos";
+                break;
+            case "Informática":
+                tipo = "informatica";
+                break;
+            case "Multimedios":
+                tipo = "multimedios";
+                break;
+        }
+        
+        return tipo;
     }
 }
