@@ -242,7 +242,15 @@ public class seleccionarAula extends javax.swing.JFrame {
             listaId.add(Aula.idAula);
         }
         reserva.setIdAulas(listaId);
-        gestorReservas.registrar(reserva);
+        try{
+            gestorReservas.registrar(reserva);
+            this.dispose();
+        }
+        catch(Exception e){
+            
+        }
+        
+        
     }//GEN-LAST:event_aceptarButtonActionPerformed
 
     private void cancelarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarButtonMouseClicked
@@ -348,7 +356,7 @@ public class seleccionarAula extends javax.swing.JFrame {
             aula[] aulasPorDia = aulas.get(filaSeleccionada);
             
             for(aula Aula: aulasPorDia){
-                aulaRow[0] = Aula.num;
+                aulaRow[0] = Aula.idAula;
                 aulaRow[1] = Aula.piso;
                 aulaRow[2] = Aula.capacidad;
                 aulaRow[3] = Aula.pizarron;

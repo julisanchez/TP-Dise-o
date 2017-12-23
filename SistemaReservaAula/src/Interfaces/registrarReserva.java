@@ -715,11 +715,13 @@ public class registrarReserva extends javax.swing.JFrame {
                     for(int i=0; i<jTable1.getRowCount(); i++){
                         Calendar fecha = Calendar.getInstance();
                         try {
-                            Date fechaTemp = dateFormat.parse((String) jTable1.getValueAt(i, 0));
+                            Date fechaTemp = dateFormat.parse(jTable1.getValueAt(i, 0).toString());
                             fecha.setTime(fechaTemp);
+                            condicion.horarios.add( timeFormat.parse(jTable1.getValueAt(i, 1).toString()));
+                            fecha.set(Calendar.HOUR_OF_DAY, condicion.horarios.get(i).getHours());
+                            fecha.set(Calendar.MINUTE, condicion.horarios.get(i).getMinutes());
                             condicion.fechas.add(fecha);
-                            condicion.horarios.add( timeFormat.parse((String) jTable1.getValueAt(i, 1)));
-                            condicion.duracion.add( timeFormat.parse((String) jTable1.getValueAt(i, 2)));
+                            condicion.duracion.add( timeFormat.parse(jTable1.getValueAt(i, 2).toString()));
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -772,6 +774,8 @@ public class registrarReserva extends javax.swing.JFrame {
                 reservaDatos.setIdDocente(docentes.get(docenteCombo.getSelectedIndex()).idDocente);
                 
                 menuAulas.reserva = reservaDatos;
+                
+                this.dispose();
                 
             }
             

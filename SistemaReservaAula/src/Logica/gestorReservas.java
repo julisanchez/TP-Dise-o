@@ -24,7 +24,8 @@ public class gestorReservas {
         nuevaReserva.cantidadAlumnos = reserva.getCant_alumnos();
         nuevaReserva.clase = claseDAO.getClase(reserva.getIdClase());
         nuevaReserva.docente = docenteDAO.getDocente(reserva.getIdDocente());
-        nuevaReserva.bedel = (bedel) menuBedel.bedelOnline;
+        if(menuBedel.bedelOnline instanceof bedel)
+        nuevaReserva.bedel =(bedel)  menuBedel.bedelOnline;
         
         periodo periodoReserva = new periodo();
         
@@ -34,7 +35,6 @@ public class gestorReservas {
         
         for(int i=0; i<reserva.getHorarios().size(); i++){
             en reservaEn = new en();
-            
             reservaEn.tipo = reserva.getTipo();
             reservaEn.horario = reserva.getHorarios().get(i);
             reservaEn.duracion = reserva.getDuracion().get(i);

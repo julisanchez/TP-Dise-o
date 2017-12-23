@@ -55,6 +55,11 @@ public class gestorAula {
         
         aulasTemp.sort(new CapacidadComparator());
         
+        if(aulasTemp.size()<3){
+           for(int i=0; i<aulasTemp.size(); i++){
+                aulas[i] = aulasTemp.get(i);
+            } 
+        }else
         for(int i=0; i<3; i++){
             aulas[i] = aulasTemp.get(i);
         }
