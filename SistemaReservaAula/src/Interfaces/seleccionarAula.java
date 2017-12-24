@@ -23,6 +23,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import sistemareservaaula.SistemaReservaAula;
 
 /**
  *
@@ -244,10 +245,11 @@ public class seleccionarAula extends javax.swing.JFrame {
         reserva.setIdAulas(listaId);
         try{
             gestorReservas.registrar(reserva);
+            
             this.dispose();
         }
         catch(Exception e){
-            
+            Logger.getLogger(SistemaReservaAula.class.getName()).log(Level.SEVERE, null, e);
         }
         
         
@@ -269,6 +271,7 @@ public class seleccionarAula extends javax.swing.JFrame {
             selectedRow = jTableReservas.getSelectedRow();
             selectedRow++;
             jTableReservas.setRowSelectionInterval(selectedRow, selectedRow);
+            cargarTablaAulas(selectedRow);
         }
     }//GEN-LAST:event_fondoKeyTyped
 
@@ -348,15 +351,15 @@ public class seleccionarAula extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         Object[] aulaRow = new Object[10];
         
-        for(int i=0; i<modelo.getRowCount(); i++){
-            modelo.removeRow(i);
+        for(int i=modelo.getRowCount()-1; i>=0; i--){
+            modelo.removeRow(0);
         }
        
         if(filaSeleccionada >= 0){
             aula[] aulasPorDia = aulas.get(filaSeleccionada);
             
             for(aula Aula: aulasPorDia){
-                aulaRow[0] = Aula.idAula;
+                aulaRow[0] = Aula.num;
                 aulaRow[1] = Aula.piso;
                 aulaRow[2] = Aula.capacidad;
                 aulaRow[3] = Aula.pizarron;

@@ -45,7 +45,7 @@ public class registrarReserva extends javax.swing.JFrame {
         initComponents();
         
        
-        
+        fechaCombo.getJCalendar().setMinSelectableDate(new Date());
         this.setLocationRelativeTo(null);
         this.esporadica.setSelected(true);
         this.fechaCombo.setDate(new Date());
@@ -640,14 +640,23 @@ public class registrarReserva extends javax.swing.JFrame {
                 List<String> horarioSinFormato = new ArrayList<>();
                 List<String> duracionSinFormato = new ArrayList<>();
                 if(tipo.equals("Periodica")){
-                    condicion.periodo = periodo.getSelectedIndex();
-                    
+                    Date hoy = new Date();
+                    int periodoId = (periodo.getSelectedIndex()+1)*100+((hoy.getYear())%100);
+                    System.out.println("Periodo: "+periodoId);
+                    condicion.periodo = (periodoId);
+                    Date horario = new Date();
+                    Calendar fecha = Calendar.getInstance();
                     
                     if(peroBox1.isSelected()){
+                        
                         try {
                             // necesita condicion.fechas?
                             condicion.dias.add("Lunes");
-                            condicion.horarios.add( timeFormat.parse(horariosPero1.getText()));
+                            horario =timeFormat.parse(horariosPero1.getText());
+                            condicion.horarios.add(horario);
+                            fecha.set(Calendar.HOUR_OF_DAY, horario.getHours());
+                            fecha.set(Calendar.MINUTE, horario.getMinutes());
+                            condicion.fechas.add(fecha);
                             condicion.duracion.add( timeFormat.parse(duracionPero1.getText()));
                             horarioSinFormato.add(horariosPero1.getText());
                             duracionSinFormato.add(duracionPero1.getText());
@@ -658,7 +667,11 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox2.isSelected()){
                         try {
                             condicion.dias.add("Martes");
-                            condicion.horarios.add( timeFormat.parse(horariosPero2.getText()));
+                            horario =timeFormat.parse(horariosPero2.getText());
+                            condicion.horarios.add(horario);
+                            fecha.set(Calendar.HOUR_OF_DAY, horario.getHours());
+                            fecha.set(Calendar.MINUTE, horario.getMinutes());
+                            condicion.fechas.add(fecha);
                             condicion.duracion.add( timeFormat.parse(duracionPero2.getText()));
                             horarioSinFormato.add(horariosPero2.getText());
                             duracionSinFormato.add(duracionPero2.getText());
@@ -669,7 +682,11 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox3.isSelected()){
                         try {
                             condicion.dias.add("Miercoles");
-                            condicion.horarios.add( timeFormat.parse(horariosPero3.getText()));
+                            horario =timeFormat.parse(horariosPero3.getText());
+                            condicion.horarios.add(horario);
+                            fecha.set(Calendar.HOUR_OF_DAY, horario.getHours());
+                            fecha.set(Calendar.MINUTE, horario.getMinutes());
+                            condicion.fechas.add(fecha);
                             condicion.duracion.add( timeFormat.parse(duracionPero3.getText()));
                             horarioSinFormato.add(horariosPero3.getText());
                             duracionSinFormato.add(duracionPero3.getText());
@@ -680,7 +697,11 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox4.isSelected()){
                         try {
                             condicion.dias.add("Jueves");
-                            condicion.horarios.add( timeFormat.parse(horariosPero4.getText()));
+                            horario =timeFormat.parse(horariosPero4.getText());
+                            condicion.horarios.add(horario);
+                            fecha.set(Calendar.HOUR_OF_DAY, horario.getHours());
+                            fecha.set(Calendar.MINUTE, horario.getMinutes());
+                            condicion.fechas.add(fecha);
                             condicion.duracion.add( timeFormat.parse(duracionPero4.getText()));
                             horarioSinFormato.add(horariosPero4.getText());
                             duracionSinFormato.add(duracionPero4.getText());
@@ -691,7 +712,11 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox5.isSelected()){
                         try {
                             condicion.dias.add("Viernes");
-                            condicion.horarios.add( timeFormat.parse(horariosPero5.getText()));
+                            horario =timeFormat.parse(horariosPero5.getText());
+                            condicion.horarios.add(horario);
+                            fecha.set(Calendar.HOUR_OF_DAY, horario.getHours());
+                            fecha.set(Calendar.MINUTE, horario.getMinutes());
+                            condicion.fechas.add(fecha);
                             condicion.duracion.add( timeFormat.parse(duracionPero5.getText()));
                             horarioSinFormato.add(horariosPero5.getText());
                             duracionSinFormato.add(duracionPero5.getText());
@@ -702,7 +727,11 @@ public class registrarReserva extends javax.swing.JFrame {
                     if(peroBox6.isSelected()){
                         try {
                             condicion.dias.add("Sabado");
-                            condicion.horarios.add( timeFormat.parse(horariosPero6.getText()));
+                            horario =timeFormat.parse(horariosPero6.getText());
+                            condicion.horarios.add(horario);
+                            fecha.set(Calendar.HOUR_OF_DAY, horario.getHours());
+                            fecha.set(Calendar.MINUTE, horario.getMinutes());
+                            condicion.fechas.add(fecha);
                             condicion.duracion.add( timeFormat.parse(duracionPero6.getText()));
                             horarioSinFormato.add(horariosPero6.getText());
                             duracionSinFormato.add(duracionPero6.getText());

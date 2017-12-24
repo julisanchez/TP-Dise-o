@@ -32,7 +32,7 @@ public class reservasDAO {
             query = session.createQuery("FROM en e WHERE e.idAula.idAula=:idAula");
             query.setParameter("idAula", idAula);
             try {
-                lista.addAll(query.getResultList());
+                lista = query.getResultList();
             }catch(Exception e) {
                 session.close();
                 return null;
@@ -46,6 +46,7 @@ public class reservasDAO {
     }
 
     static periodo getPeriodo(int idPeriodo) {
+        System.out.println("Periodo en getPeriodo" +idPeriodo);
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
         
@@ -73,8 +74,7 @@ public class reservasDAO {
     static void guardar(reserva nuevaReserva) {
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
-        session.clear();
-        
+        //session.clear();
         try { 
             session.beginTransaction();
             session.save(nuevaReserva);

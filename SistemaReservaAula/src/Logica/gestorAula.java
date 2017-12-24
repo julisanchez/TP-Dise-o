@@ -23,6 +23,7 @@ public class gestorAula {
         List<aula[]> resultado = new ArrayList<>();
         
         List<Integer> idAulas = aulaDAO.buscarAula(condicion);
+        System.out.println("Perioddo en buscarDisponibilidad: "+condicion.periodo);
         List<List<Integer>> aulasDisponibles = gestorReservas.buscarDisponibles(idAulas, condicion);
         for(List<Integer> aulasPorDia : aulasDisponibles){
             System.out.println(aulasPorDia.toString());

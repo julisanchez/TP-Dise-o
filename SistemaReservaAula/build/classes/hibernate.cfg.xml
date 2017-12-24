@@ -6,9 +6,15 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <!--<property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!--EXTERNAL DATABASE
         <property name="hibernate.connection.username">bd91e7489764bf</property>
         <property name="hibernate.connection.password">37e445a2</property>
-        <property name="hibernate.connection.url">jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_fecacb5447852a5</property>
+        <property name="hibernate.connection.url">jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/heroku_fecacb5447852a5</property>-->
+        <!--LOCAL DATABASE-->
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/tpDisenio</property>
+        
         <property name="show_sql">true</property>
         <property name="format_sql">false</property>
         <!--<property name="hibernate.hbm2ddl.auto">create</property>-->

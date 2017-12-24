@@ -24,12 +24,12 @@ public class gestorReservas {
         nuevaReserva.cantidadAlumnos = reserva.getCant_alumnos();
         nuevaReserva.clase = claseDAO.getClase(reserva.getIdClase());
         nuevaReserva.docente = docenteDAO.getDocente(reserva.getIdDocente());
-        if(menuBedel.bedelOnline instanceof bedel)
-        nuevaReserva.bedel =(bedel)  menuBedel.bedelOnline;
+        nuevaReserva.bedel =(bedel)  usuarioDAO.getBedel(menuBedel.bedelOnline.getUsername());
         
         periodo periodoReserva = new periodo();
         
         if(reserva.getTipo().equals("Periodica")){
+            System.out.println("Id reserva: "+reserva.getIdPeriodo());
             periodoReserva = reservasDAO.getPeriodo(reserva.getIdPeriodo());
         }
         
@@ -39,12 +39,13 @@ public class gestorReservas {
             reservaEn.horario = reserva.getHorarios().get(i);
             reservaEn.duracion = reserva.getDuracion().get(i);
             reservaEn.fecha = reserva.getFechas().get(i);
-            //reservaEn.idAula = aulaDAO.getAula(reserva.getIdAulas().get(i));
+            reservaEn.idAula = aulaDAO.getAula(reserva.getIdAulas().get(i));
             
             if(reserva.getTipo().equals("Periodica")){
                 reservaEn.idPeriodo = periodoReserva;
             }
             else{
+                System.out.println("Id reserva: "+reserva.getHorarios().get(i));
                 reservaEn.idPeriodo = reservasDAO.getPeriodo(reserva.getHorarios().get(i));
             }
             
