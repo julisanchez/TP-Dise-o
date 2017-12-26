@@ -10,6 +10,7 @@ import DTO.reservaDTO;
 import Datos.aula;
 import Datos.clase;
 import Datos.docente;
+import Datos.periodo;
 import Logica.gestorAula;
 import Logica.gestorClase;
 import Logica.gestorDocente;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,6 +38,7 @@ public class registrarReserva extends javax.swing.JFrame {
     private String sfecha;
     private List<docente> docentes;
     private List<clase> clases;
+    private List<periodo> periodos;
     
 
     /**
@@ -86,6 +89,22 @@ public class registrarReserva extends javax.swing.JFrame {
            this.docenteCombo.addItem(doc.apellido + ", " + doc.nombre);
         }
         
+        periodos = gestorReservas.obtenerPeriodos();
+        String periodoString="";
+        for(periodo periodoLista:periodos){
+            switch (periodoLista.getPeriodo()){
+                case 1:
+                    periodoString = "Primer Semestre";
+                    break;
+                case 2:
+                    periodoString = "Segundo Cuatrimestre";
+                    break;
+                case 3:
+                    periodoString = "Anual";
+                    break;
+            }
+            periodo.addItem(periodoString+" "+periodoLista.getAnio());
+        }
         clases = gestorClase.getClases();
         
         for(clase Clase : clases){
@@ -587,7 +606,11 @@ public class registrarReserva extends javax.swing.JFrame {
         duracionPero6.setText("02:00");
         getContentPane().add(duracionPero6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 50, -1));
 
-        periodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primer Semestre", "Segundo Semestre", "Anual" }));
+        periodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                periodoActionPerformed(evt);
+            }
+        });
         getContentPane().add(periodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/simple-blue-ii.jpg"))); // NOI18N
@@ -641,7 +664,7 @@ public class registrarReserva extends javax.swing.JFrame {
                 List<String> duracionSinFormato = new ArrayList<>();
                 if(tipo.equals("Periodica")){
                     Date hoy = new Date();
-                    int periodoId = (periodo.getSelectedIndex()+1)*100+((hoy.getYear())%100);
+                    int periodoId = periodos.get(periodo.getSelectedIndex()).idPeriodo;
                     System.out.println("Periodo: "+periodoId);
                     condicion.periodo = (periodoId);
                     Date horario = new Date();
@@ -751,6 +774,7 @@ public class registrarReserva extends javax.swing.JFrame {
                             fecha.set(Calendar.MINUTE, condicion.horarios.get(i).getMinutes());
                             condicion.fechas.add(fecha);
                             condicion.duracion.add( timeFormat.parse(jTable1.getValueAt(i, 2).toString()));
+       
                         } catch (ParseException ex) {
                             Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -760,51 +784,59 @@ public class registrarReserva extends javax.swing.JFrame {
                 }
                 
                 
-                List<aula[]> aulas = gestorAula.buscarDisponibilidad(condicion);
-                
-                seleccionarAula menuAulas = new seleccionarAula(); 
-                menuAulas.aulas = aulas;
-                if(this.esporadica.isSelected()){
-                    for(int i=0; i<jTable1.getRowCount(); i++){
-                        Object[] fecha = new Object[3];
-                        for(int j=0; j<3; j++){
-                            fecha[j] = jTable1.getModel().getValueAt(i,j);
+                List<aula[]> aulas;
+                try {
+                    aulas = gestorAula.buscarDisponibilidad(condicion);
+                    seleccionarAula menuAulas = new seleccionarAula(); 
+                    menuAulas.aulas = aulas;
+                    if(this.esporadica.isSelected()){
+                        for(int i=0; i<jTable1.getRowCount(); i++){
+                            Object[] fecha = new Object[3];
+                            for(int j=0; j<3; j++){
+                                fecha[j] = jTable1.getModel().getValueAt(i,j);
+                            }
+                            menuAulas.fechas.add(fecha);
                         }
-                        menuAulas.fechas.add(fecha);
                     }
-                }
-                if (this.periodica.isSelected()){
-                    for (int i=0; i<condicion.dias.size(); i++){
-                        Object[] dias = new Object[3];
-                        dias[0] = condicion.dias.get(i);
-                        dias[1] = horarioSinFormato.get(i);
-                        dias[2] = duracionSinFormato.get(i);
-                        menuAulas.fechas.add(dias);
+                    if (this.periodica.isSelected()){
+                        for (int i=0; i<condicion.dias.size(); i++){
+                            Object[] dias = new Object[3];
+                            dias[0] = condicion.dias.get(i);
+                            dias[1] = horarioSinFormato.get(i);
+                            dias[2] = duracionSinFormato.get(i);
+                            menuAulas.fechas.add(dias);
+                        }
                     }
+                    menuAulas.cargarTablaFechas();
+                    menuAulas.cargarTablaAulas(0);
+                    menuAulas.setVisible(true);
+
+
+                    this.setVisible(false);
+
+                    reservaDTO reservaDatos = new reservaDTO();
+                    reservaDatos.setTipo(tipo);
+                    reservaDatos.setCant_alumnos(Integer.parseInt(cantAlumnos));
+                    reservaDatos.setDuracion(condicion.duracion);
+                    reservaDatos.setFechas(condicion.dias);
+                    reservaDatos.setHorarios(condicion.fechas);
+                    reservaDatos.setIdPeriodo(condicion.periodo);
+                    //seleccionar las aulas
+
+                    reservaDatos.setIdClase(clases.get(catedraCombo.getSelectedIndex()).idClase);
+                    reservaDatos.setIdDocente(docentes.get(docenteCombo.getSelectedIndex()).idDocente);
+
+                    menuAulas.reserva = reservaDatos;
+
+                    this.dispose();
+                } catch (Exception ex) {
+                    Logger.getLogger(registrarReserva.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null,ex,"No se puede realizar la reserva",JOptionPane.ERROR_MESSAGE);
+                    this.dispose();
                 }
-                menuAulas.cargarTablaFechas();
-                menuAulas.cargarTablaAulas(0);
-                menuAulas.setVisible(true);
                 
                 
-                this.setVisible(false);
                 
-                reservaDTO reservaDatos = new reservaDTO();
-                reservaDatos.setTipo(tipo);
-                reservaDatos.setCant_alumnos(Integer.parseInt(cantAlumnos));
-                reservaDatos.setDuracion(condicion.duracion);
-                reservaDatos.setFechas(condicion.dias);
-                reservaDatos.setHorarios(condicion.fechas);
-                //periodo con anio o sin anio ?
-                reservaDatos.setIdPeriodo(condicion.periodo);
-                //seleccionar las aulas
-                
-                reservaDatos.setIdClase(clases.get(catedraCombo.getSelectedIndex()).idClase);
-                reservaDatos.setIdDocente(docentes.get(docenteCombo.getSelectedIndex()).idDocente);
-                
-                menuAulas.reserva = reservaDatos;
-                
-                this.dispose();
                 
             }
             
@@ -997,6 +1029,27 @@ public class registrarReserva extends javax.swing.JFrame {
             this.errorDuracion.setVisible(true);
             aux=true;
         }
+        //VALIDAR QUE NO SE PUEDA INGRESAR UN DOMINGO
+        Calendar calendario = Calendar.getInstance();
+        calendario = this.fechaCombo.getCalendar();
+        int dia = calendario.get(Calendar.DAY_OF_WEEK);
+        if (dia==1){
+            JOptionPane.showMessageDialog(null,"No puede ingresar un dia Domingo","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+            aux = true;
+        }
+
+
+        //VALIDAR QUE NO SE REPITA LA FECHA EXISTENTE
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String Fecha = format.format(this.fechaCombo.getDate());
+        for (int i = 0; i < this.jTable1.getRowCount(); i++) { 
+            String valor = this.jTable1.getValueAt(i, 0).toString().trim();
+            if(valor.equals(Fecha)){
+                JOptionPane.showMessageDialog(null,"La fecha ingresada ya fue cargada","Mensaje de Error",JOptionPane.ERROR_MESSAGE);
+                aux=true;
+                break;
+            }
+        }
         
         if(!aux){
         //TODO OK, LLAMAR FUNCION AGREGAR
@@ -1065,6 +1118,10 @@ public class registrarReserva extends javax.swing.JFrame {
         jTextField1.setText(docentes.get(docenteCombo.getSelectedIndex()).email);
         
     }//GEN-LAST:event_docenteComboItemStateChanged
+
+    private void periodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_periodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_periodoActionPerformed
     private static boolean validarHorario(String hora){
            int horas=0;
            int minutos=0;

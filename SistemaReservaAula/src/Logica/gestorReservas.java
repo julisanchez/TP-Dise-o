@@ -45,8 +45,9 @@ public class gestorReservas {
                 reservaEn.idPeriodo = periodoReserva;
             }
             else{
-                System.out.println("Id reserva: "+reserva.getHorarios().get(i));
+                System.out.println("Id reserva: "+reserva.getHorarios().get(i).toString());
                 reservaEn.idPeriodo = reservasDAO.getPeriodo(reserva.getHorarios().get(i));
+                if(reservaEn.idPeriodo.idPeriodo == 0) reservaEn.idPeriodo = null;
             }
             
             nuevaReserva.ens.add(reservaEn);
@@ -185,5 +186,9 @@ public class gestorReservas {
         }
         
         return diasSemanas;
+    }
+    
+    public static List<periodo> obtenerPeriodos(){
+        return reservasDAO.getPeriodosDisponibles();
     }
 }

@@ -10,6 +10,7 @@ import Datos.periodo;
 import Datos.reserva;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -57,14 +58,33 @@ public class reservasDAO {
         return Periodo;
     }
     
+    static List<periodo> getPeriodosDisponibles(){
+        List<periodo> periodos;
+        SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("FROM periodo p WHERE  p.fin > :fecha");
+        query.setParameter("fecha", Calendar.getInstance());
+        
+        periodos = query.getResultList();
+     
+        session.close();
+        
+        return periodos;
+    }
+    
     //Busca el periodo cuatrimestral al que pertence la fecha
     static periodo getPeriodo(Calendar fecha) {
         SessionFactory sessionFactory = conexion.getInstance().getSessionFactory();
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("FROM periodo p WHERE p.inicio >= :fecha AND p.fin <= :fecha");
         query.setParameter("fecha", fecha);
+        periodo Periodo = new periodo();
+        try {
+            Periodo = (periodo) query.getResultList().get(0);
+        } catch (Exception e) {
+            Periodo.idPeriodo=0;
+        }
         
-        periodo Periodo = (periodo) session.byId(periodo.class).getReference(query.getFirstResult());
      
         session.close();
         

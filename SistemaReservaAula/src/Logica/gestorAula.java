@@ -18,17 +18,22 @@ import java.util.List;
  * @author julisanchez
  */
 public class gestorAula {
-    public static List<aula[]> buscarDisponibilidad(condicionDTO condicion){
+    public static List<aula[]> buscarDisponibilidad(condicionDTO condicion) throws Exception{
         aula[] aulas;
         List<aula[]> resultado = new ArrayList<>();
         
         List<Integer> idAulas = aulaDAO.buscarAula(condicion);
-        System.out.println("Perioddo en buscarDisponibilidad: "+condicion.periodo);
+        if(idAulas.isEmpty()){
+            throw new Exception("No se encontro aulas disponibles con esa capacidad");
+        }
         List<List<Integer>> aulasDisponibles = gestorReservas.buscarDisponibles(idAulas, condicion);
         for(List<Integer> aulasPorDia : aulasDisponibles){
             System.out.println(aulasPorDia.toString());
             aulas = selecciona3(aulasPorDia);
             resultado.add(aulas);
+        }
+        if(resultado.isEmpty()){
+            throw new Exception("No se encontro aulas disponibles en estos dias y horarios");
         }
         
         return resultado;
